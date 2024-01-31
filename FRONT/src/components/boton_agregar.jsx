@@ -1,6 +1,6 @@
 import React from "react";
 
-function boton_agregar({subir}) {
+function boton_agregar({subir, agregar}) {
   return (
     <>
       <div className="flex flex-col self-center items-center ">
@@ -9,7 +9,7 @@ function boton_agregar({subir}) {
           type="submit"
           onClick={subir}
         >
-          Agregar mecánico
+          {agregar}
         </button>
       </div>
     </>
