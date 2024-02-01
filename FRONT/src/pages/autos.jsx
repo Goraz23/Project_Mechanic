@@ -9,6 +9,7 @@ function autos() {
           <Tupla
             tupla="Placa del auto: "
             descripcion="Ingresa la placa del auto"
+            
           />
         </div>
         <div className="items-center place-items-center ">
