@@ -9,9 +9,8 @@ import Card from "../components/card";
 import ingresos from "../image/ingresos.png";
 import clientes from "../image/clientes.png";
 import autos from "../image/autos_1.png";
-import seis from "../image/reparacion.png";
 
-function dashboard_admin() {
+function dashboard_mechanic() {
   return (
     <>
       <div className="relative flex p-0 ">
@@ -31,14 +30,27 @@ function dashboard_admin() {
               </button>
             </Link>
           </div>
+
           <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={dos}
+              className="items-center h-[100%] pl-5 w-[17%] flex"
+            />
+            <Link to="#">
+              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
+                Reparaciones
+              </button>
+            </Link>
+          </div>
+
+          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+            <img
+              src={tres}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
             <Link to="#">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Mecánicos
+                Trabajos
               </button>
             </Link>
           </div>
@@ -146,4 +158,4 @@ function dashboard_admin() {
   );
 }
 
-export default dashboard_admin;
+export default dashboard_mechanic;

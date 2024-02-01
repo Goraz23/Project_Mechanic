@@ -7,11 +7,12 @@ import Reparaciones from "../pages/reparaciones";
 import Materiales from "../pages/materiales";
 import Trabajos  from "../pages/trabajos";
 import Perfil from "../components/perfil";
-import Dashboard_admin from "../pages/dashboard_admin";
+import DashAdmin from "../pages/dashboard_admin";
+import DashMechanic from "../pages/dashboard_mecanico";
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Navbar />,
     children: [
       {
@@ -42,11 +43,15 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element:<Login/>
+    path:"/mechanic",
+    element:<DashMechanic/>,
   },
   {
     path:"/admin",
-    element:<Dashboard_admin/>,
+    element:<DashAdmin/>,
+  },
+  {
+    path: "/login",
+    element:<Login/>
   },
 ]);
