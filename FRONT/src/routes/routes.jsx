@@ -7,6 +7,7 @@ import Reparaciones from "../pages/reparaciones";
 import Materiales from "../pages/materiales";
 import Trabajos  from "../pages/trabajos";
 import Perfil from "../components/perfil";
+import Dashboard_admin from "../pages/dashboard_admin";
 
 export const routes = createBrowserRouter([
   {
@@ -37,10 +38,15 @@ export const routes = createBrowserRouter([
         path:"/perfil",
         element:<Perfil/>,
       },
+      
     ],
   },
   {
     path: "/login",
     element:<Login/>
-  }
+  },
+  {
+    path:"/admin",
+    element:<Dashboard_admin/>,
+  },
 ]);
