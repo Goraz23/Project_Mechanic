@@ -6,7 +6,6 @@ import Autos from "../pages/autos";
 import Reparaciones from "../pages/reparaciones";
 import Materiales from "../pages/materiales";
 import Trabajos  from "../pages/trabajos";
-import Perfil from "../components/perfil";
 import DashAdmin from "../pages/dashboard_admin";
 import DashMechanic from "../pages/dashboard_mecanico";
 
@@ -34,10 +33,6 @@ export const routes = createBrowserRouter([
       {
         path:"/trabajos",
         element:<Trabajos/>,
-      },
-      {
-        path:"/perfil",
-        element:<Perfil/>,
       },
       
     ],

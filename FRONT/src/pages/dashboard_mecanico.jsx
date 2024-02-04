@@ -15,10 +15,13 @@ function dashboard_mechanic() {
     <>
       <div className="relative flex p-0 ">
         <div className="h-[100%] flex flex-col  fixed items-center px-6 botton-0 left-0 w-[20%] mb-0 top-0 mt-0 bg-[#0F606B] text-[#3B4758] ">
+          <Link to='/mechanic'>
           <img
             src={logo_dos}
             className="items-center  pl-5 w-full pb-0 top-0 m-auto"
           />
+          </Link>
+          
           <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={uno}

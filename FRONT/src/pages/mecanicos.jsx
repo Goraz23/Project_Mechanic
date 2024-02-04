@@ -1,5 +1,5 @@
 // import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Tupla from "../components/tupla";
 import Boton_agregar from "../components/boton_agregar";
 
@@ -167,7 +167,7 @@ function mecanicos() {
                 </div>
                 <Boton_agregar subir={AddMechanic} agregar="Agrega un mecánico" />
             </div>
-            <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
+            <div className="mt-5 mx-20 overflow-auto h-[170px] border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
                 <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
                     <thead className="text-center text-white ">
                         <tr>
@@ -187,19 +187,19 @@ function mecanicos() {
                                 <td>{mecanico.surname}</td>
                                 <td>{mecanico.email}</td>
                                 <td>{mecanico.pass}</td>
-                                <td>
+                                <td className="pt-2">
                                     <button
                                         type="button"
                                         onClick={() => deleteMechanic(mecanico.id_mechanic)}
                                         className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                                     >
-                                        Eliminar
+                                        <box-icon name='trash' type='solid' color='#ffffff' className='items-center' ></box-icon>
                                     </button>
                                     <button
                                         type="button"
                                         className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
                                     >
-                                        Actualizar
+                                         <box-icon name='info-circle' type='solid' color='#ffffff' ></box-icon>
                                     </button>
                                 </td>
                             </tr>

@@ -1,6 +1,7 @@
 import {useState,useEffect} from 'react'
 import Tupla from "../components/tupla";
 import Boton_agregar from "../components/boton_agregar";
+
 function materiales() {
 
   const [material, setMaterial] = useState({
@@ -55,31 +56,32 @@ const AddMaterial = async (e) => {
 };
 
 
-// const deleteMechanic = async (id_mechanic) => {
-// try {
-//     const response = await fetch(`http://localhost:8082/deleteMechanic/${id_mechanic}`, {
-//         method: 'DELETE',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             id_mechanic: id_mechanic,
-//         }),
-//     });
+const deleteMaterial = async (id_materials) => {
+try {
+    const response = await fetch(`http://localhost:8082/delateMaterial/${id_materials}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id_materials: id_materials,
+        }),
+    });
 
-//     const result = await response.json();
-//     console.log(result);
 
-//     // Después de eliminar, actualiza la lista de mecánicos
-//     if (result.success) {
-//         setViewMechanic(viewMechanic.filter((mecanico) => mecanico.id_mechanic !== id_mechanic));
-//     } else {
-//         console.error("Error al eliminar mecánico");
-//     }
-// } catch (error) {
-//     console.error("Error al eliminar mecánico", error);
-// }
-// };
+    const result = await response.json();
+    console.log(result);
+
+    // Después de eliminar, actualiza la lista de mecánicos
+    if (result.success) {
+        setViewMaterial(viewMaterial.filter((material) => material.id_materials !== id_materials));
+    } else {
+        console.error("Error al eliminar material");
+    }
+} catch (error) {
+    console.error("Error al eliminar material", error);
+}
+};
 
 // const updateMechanic = async (id, updatedMechanic) => {
 //   try {
@@ -155,8 +157,8 @@ console.log(viewMaterial);
       <Boton_agregar subir={AddMaterial} agregar="Agrega un material" />
       
     </div>
-    <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
-        <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
+    <div className="mt-5 mx-20 overflow-auto h-[250px] border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
+        <table className="w-full  table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>
@@ -173,19 +175,19 @@ console.log(viewMaterial);
                                 <td>{material.material}</td>
                                 <td>{material.precio}</td>
                                 <td>{material.Cantidad}</td>
-                                <td>
+                                <td className='pt-2'>
                                     <button
                                         type="button"
-                                        // onClick={() => deleteMechanic(mecanico.id_mechanic)}
-                                        className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                        onClick={() => deleteMaterial(material.id_materials)}
+                                        className="  text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                                     >
-                                        Eliminar
+                                        <box-icon name='trash' type='solid' color='#ffffff' className='items-center' ></box-icon>
                                     </button>
                                     <button
                                         type="button"
                                         className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
                                     >
-                                        Actualizar
+                                        <box-icon name='info-circle' type='solid' color='#ffffff' ></box-icon>
                                     </button>
                                 </td>
                             </tr>
