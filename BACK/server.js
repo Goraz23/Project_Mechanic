@@ -69,6 +69,27 @@ app.delete("/deleteMechanic/:id", (req, res) => {
   });
 });
 
+app.post('/login', (req, res) => {
+  const  email = req.body.email
+  const pass  = req.body.pass
+  
+
+  const query = 'SELECT * FROM mechanic WHERE email = ? AND pass = ?';
+  connection.query(query, [email, pass], (error, results) => {
+
+    if (error) throw error;
+    if (results.length > 0) {
+      
+      const user = results[0];
+      res.json({ success: true,
+         role: user.rol_id });
+    } else {
+      
+      res.json({ success: false, message: 'Credenciales incorrectas' });
+    }
+  });
+});
+
 //ALL MATERIAL
 app.post("/addMaterial", (req, res) => {
   const material = req.body.material;
