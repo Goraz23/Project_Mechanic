@@ -25,7 +25,7 @@ function dashboard_admin() {
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
             <Link to="#">
-              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
+              <button className="items-centerfont-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Dashboard
               </button>
             </Link>
@@ -46,7 +46,7 @@ function dashboard_admin() {
               src={dos}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
-            <Link to="#">
+            <Link to="/amecanicos">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Mecánicos
               </button>

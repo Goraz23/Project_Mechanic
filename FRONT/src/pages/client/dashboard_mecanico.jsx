@@ -1,6 +1,6 @@
 // import React from 'react'
 import Card from '../../components/card'
-import {Link} from 'react'
+import { Link } from 'react-router-dom';
 import uno from "../../image/uno.png";
 import logo_dos from "../../image/logo2.png";
 import dos from "../../image/reparaciones.png";
@@ -39,7 +39,7 @@ function dashboard_mecanico() {
               src={dos}
               className="items-center h-[100%] pl-5 w-[17%] flex"
             />
-            <Link to="#">
+            <Link to="/mreparaciones">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Reparaciones
               </button>
@@ -51,7 +51,7 @@ function dashboard_mecanico() {
               src={tres}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
-            <Link to="#">
+            <Link to="/mtrabajos">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Trabajos
               </button>
@@ -63,9 +63,9 @@ function dashboard_mecanico() {
               src={cuatro}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
-            <Link to="#">
+            <Link to="/mvehiculos">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Autos
+               Vehículos
               </button>
             </Link>
           </div>
@@ -75,7 +75,7 @@ function dashboard_mecanico() {
               src={cinco}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
-            <Link to="#">
+            <Link to="/mmateriales">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Materiales
               </button>
