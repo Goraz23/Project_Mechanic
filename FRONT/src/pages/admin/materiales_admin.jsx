@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
+import Navbar_admin from "../../components/admin/navbar_admin";
+
 
 function materiales_admin() {
   const [material, setMaterial] = useState({
@@ -127,6 +129,7 @@ function materiales_admin() {
 
   return (
     <>
+    <Navbar_admin />
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
