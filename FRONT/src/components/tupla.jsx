@@ -10,7 +10,7 @@ function tupla({ tupla, descripcion, dato,value, change }) {
           <input
             id={tupla}
             type={dato}
-            value={''}
+            value={value}
             onChange={change}
             className="mt-2 h-8 block w-full border-[2px] rounded-2xl border-[#185866] p-3 bg-gray-50"
             placeholder={descripcion}
