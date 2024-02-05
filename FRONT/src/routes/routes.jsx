@@ -13,7 +13,7 @@ export const routes = createBrowserRouter([
     element: <Title />,
     children: [
       {
-        path: "/login",
+        path: "/",
         element:<Login/>
       },
       
