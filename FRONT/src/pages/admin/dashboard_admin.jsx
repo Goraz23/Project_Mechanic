@@ -77,12 +77,16 @@ function dashboard_admin() {
             </Link>
           </div>
           <div className="flex pb-5 flex-col self-center items-center ">
+
+            <Link to="/">
             <button
               className="text-center mx-4 mt-2  rounded-2xl h-[%100] p-1 text-black bg-[#b1c9ce]  w-[100%]"
               type="submit"
             >
               Cerrar sesión
             </button>
+            </Link>
+            
           </div>
         </div>
       </div>

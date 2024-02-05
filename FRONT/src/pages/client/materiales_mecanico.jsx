@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import navbar_mecanico from '../../components/client/navbar_mecanico'
+import Navbar_mecanico from "../../components/client/navbar_mecanico";
 function materiales_admin() {
   const [material, setMaterial] = useState({
     material: "",
@@ -97,7 +97,7 @@ function materiales_admin() {
 
   return (
     <>
-    
+    <Navbar_mecanico/>
       <div className="mt-5 mx-20 overflow-auto h-[250px] border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
         <table className="w-full  table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
           <thead className="text-center text-white ">

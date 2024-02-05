@@ -45,11 +45,10 @@ function Vehiculos_admin() {
         modelo: "",
         descripcion: "",
       });
-      alert("Se ha agregado el vehículo correctamente");
+
       if (result.success) {
         setviewVehiculo([...viewVehiculo, vehiculos]);
       } else {
-        alert("No se pudo agregar el vehículo");
         console.error("Error al registrar vehiculo");
       }
     } catch (error) {
