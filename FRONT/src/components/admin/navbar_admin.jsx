@@ -1,4 +1,4 @@
-import Title from "../title";
+
 import BotonUno from "../boton_uno";
 import Perfil from "../perfil";
 import foto from "../../image/perfil.png";
@@ -11,13 +11,13 @@ function navbar_admin() {
 
         <BotonUno nombre="Trabajos" ruta="/atrabajos" />
 
-        <BotonUno nombre="Reparaciones" ruta="#" />
+        <BotonUno nombre="Reparaciones" ruta="/areparaciones" />
 
-        <BotonUno nombre="Materiales" ruta="#" />
+        <BotonUno nombre="Materiales" ruta="/amateriales" />
 
-        <BotonUno nombre="Autos" ruta="#" />
+        <BotonUno nombre="Vehículos" ruta="/avehiculos" />
 
-        <BotonUno nombre="Mecánicos" ruta="#" />
+        <BotonUno nombre="Mecánicos" ruta="/amecanicos" />
 
         <Perfil ruta="#" imagen={foto} />
       </div>
