@@ -14,6 +14,7 @@ const connection = mysql.createConnection({
   database: "geovani_mechanic",
 });
 
+
 connection.connect((error) => {
   if (error) {
     console.log("ERROR DE CONEXIÓN", error);
@@ -81,10 +82,8 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       
       const user = results[0];
-      res.json({ success: true,
-         role: user.rol_id });
-    } else {
-      
+      res.json({ success: true, role: user.rol_id });
+    } else { 
       res.json({ success: false, message: 'Credenciales incorrectas' });
     }
   });
@@ -157,7 +156,7 @@ app.post("/addVehiculo", (req, res) => {
   });
 });
 
-app.get("/viewVehículo", (req, res) => {
+app.get("/viewVehiculo", (req, res) => {
   const viewVehículo = `SELECT * FROM vehiculos`;
   connection.query(viewVehículo, (err, result) => {
     if (err) return res.json({ error: "error al ver los vehículos", err });
