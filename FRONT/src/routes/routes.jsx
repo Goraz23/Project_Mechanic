@@ -1,52 +1,50 @@
 import { createBrowserRouter } from "react-router-dom";
-import Navbar from "../components/navbar";
 import Login from "../pages/login";
-import Mecanicos from "../pages/mecanicos";
-import Autos from "../pages/autos";
-import Reparaciones from "../pages/reparaciones";
-import Materiales from "../pages/materiales";
-import Trabajos  from "../pages/trabajos";
-import DashAdmin from "../pages/dashboard_admin";
-import DashMechanic from "../pages/dashboard_mecanico";
-
+import Dashboard_admin from '../pages/admin/dashboard_admin'
+import Materiales_admin from "../pages/admin/materiales_admin";
+import Trabajos_admin from "../pages/admin/trabajos_admin";
+import Mecanicos_admin from "../pages/admin/mecanicos_admin";
+import Title from "../components/title";
 export const routes = createBrowserRouter([
   {
     path: "",
-    element: <Navbar />,
+    element: <Title />,
     children: [
       {
-        path: "/mecanicos",
-        element: <Mecanicos />,
+        path: "/login",
+        element:<Login/>
+      },
+      
+      {
+      path:"/amateriales",
+      element:<Materiales_admin/>,
       },
       {
-        path:"/autos",
-        element:<Autos/>,
+        path:"/atrabajos",
+        element:<Trabajos_admin/>,
       },
       {
-        path:"/reparaciones",
-        element:<Reparaciones/>,
+        path:"/amecanicos",
+        element:<Mecanicos_admin/>,
       },
-      {
-        path:"/materiales",
-        element:<Materiales/>,
-      },
-      {
-        path:"/trabajos",
-        element:<Trabajos/>,
-      },
+      // {
+      //   path:"/reparaciones",
+      //   element:<Reparaciones/>,
+      // },
+      // {
+      //   path:"/materiales",
+      //   element:<Materiales/>,
+      // },
+      // {
+      //   path:"/trabajos",
+      //   element:<Trabajos/>,
+      // },
       
     ],
   },
   {
-    path:"/mechanic",
-    element:<DashMechanic/>,
-  },
-  {
-    path:"/admin",
-    element:<DashAdmin/>,
-  },
-  {
-    path: "/login",
-    element:<Login/>
-  },
+    path: "/adash",
+    element: <Dashboard_admin />,
+ },
+  
 ]);

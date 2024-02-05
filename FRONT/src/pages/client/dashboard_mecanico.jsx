@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
-import uno from "../image/uno.png";
-import logo_dos from "../image/logo2.png";
-import dos from "../image/reparaciones.png";
-import tres from "../image/trabajos.png";
-import cuatro from "../image/autos.png";
-import cinco from "../image/materiales.png";
-import Card from "../components/card";
-import ingresos from "../image/ingresos.png";
-import clientes from "../image/clientes.png";
-import autos from "../image/autos_1.png";
-
-function dashboard_mechanic() {
+// import React from 'react'
+import Card from '../../components/card'
+import {Link} from 'react'
+import uno from "../../image/uno.png";
+import logo_dos from "../../image/logo2.png";
+import dos from "../../image/reparaciones.png";
+import tres from "../../image/trabajos.png";
+import cuatro from "../../image/autos.png";
+import cinco from "../../image/materiales.png";
+import ingresos from "../../image/ingresos.png";
+import clientes from "../../image/clientes.png";
+import autos from "../../image/autos_1.png";
+function dashboard_mecanico() {
   return (
     <>
       <div className="relative flex p-0 ">
@@ -158,7 +158,7 @@ function dashboard_mechanic() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default dashboard_mechanic;
+export default dashboard_mecanico

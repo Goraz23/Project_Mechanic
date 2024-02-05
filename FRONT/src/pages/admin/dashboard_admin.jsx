@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import uno from "../image/uno.png";
-import logo_dos from "../image/logo2.png";
-import dos from "../image/reparaciones.png";
-import tres from "../image/trabajos.png";
-import cuatro from "../image/autos.png";
-import cinco from "../image/materiales.png";
-import Card from "../components/card";
-import ingresos from "../image/ingresos.png";
-import clientes from "../image/clientes.png";
-import autos from "../image/autos_1.png";
-import seis from "../image/reparacion.png";
+import uno from "../../image/uno.png";
+import logo_dos from "../../image/logo2.png";
+import dos from "../../image/reparaciones.png";
+import cuatro from "../../image/autos.png";
+import cinco from "../../image/materiales.png";
+import Card from "../../components/card";
+import ingresos from "../../image/ingresos.png";
+import clientes from "../../image/clientes.png";
+import autos from "../../image/autos_1.png";
 
 function dashboard_admin() {
   return (
@@ -60,7 +58,7 @@ function dashboard_admin() {
               src={cinco}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
-            <Link to="#">
+            <Link to="/amateriales">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Materiales
               </button>

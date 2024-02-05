@@ -171,6 +171,61 @@ app.delete('/delateVehiculo/:id',(req,res)=>{
   });
 })
 
+//ALL REPARACIONES
+app.post("/addReparacion", (req, res) => {
+  const reparacion = req.body.reparacion;
+  const detalles = req.body.detalles;
+  const precio_reparaciones = req.body.precio_reparaciones;
+  const costo_material = req.body.costo_material;
+  const hora_inicio = req.body.hora_inicio;
+  const hora_final = req.body.hora_final;
+  const mechanic_id = req.body.mechanic_id;
+  const state_id = req.body.state_id;
+ 
+
+  const addReparacion = `INSERT INTO reparaciones (reparacion, detalles, precio_reparaciones, costo_material, hora_inicio, hora_final, mechanic_id, state_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  connection.query(addReparacion, [reparacion, detalles, precio_reparaciones, costo_material, hora_inicio, hora_final, mechanic_id, state_id], (err, result) => {
+    if (err) return res.json({ error: "error al agregar vehículo", err });
+    return res.json({ vehiculo: result });
+  });
+});
+
+app.get("/viewVehículo", (req, res) => {
+  const viewVehículo = `SELECT * FROM vehiculos`;
+  connection.query(viewVehículo, (err, result) => {
+    if (err) return res.json({ error: "error al ver los vehículos", err });
+    return res.json({ vehiculos: result });
+  });
+});
+
+app.put("/updateVehiculo/:id", (req, res) => {
+  const placa = req.body.placa;
+  const modelo = req.body.modelo;
+  const descripcion = req.body.descripcion;  
+  const id_vehiculo = req.params.id;
+
+  const updateMaterial = "UPDATE vehiculos SET placa = ?, modelo = ?, descripcion = ? WHERE id_vehiculo  = ?";
+
+  connection.query(
+      updateMaterial,
+      [placa, modelo, descripcion, id_vehiculo],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar vehículo", err });
+          return res.json({ vehiculo: result });
+      }
+  );
+});
+
+app.delete('/delateVehiculo/:id',(req,res)=>{
+  const id_vehiculo = req.params.id;
+  const deleteVehiculo = `DELETE FROM vehiculo WHERE id_vehiculo = ?`;
+  connection.query(deleteVehiculo, [id_vehiculo], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el vehículo", err });
+    return res.json({ material: result });
+  });
+})
+
 
 app.listen(8082, () => {
   console.log("ESCUCHANDO EN EL PUERTO 8082");

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Title from "../components/title";
+import { useEffect, useState } from "react";
+// import Title from "../components/title";
 import Logo from "../image/logo.png";
 import Tupla from "../components/tupla";
 
@@ -48,7 +48,7 @@ function login() {
 
   return (
     <>
-      <Title />
+      {/* <Title /> */}
       <div className="container w-[480px] h-[500px] rounded-xl items-center mt-[7.5%] m-auto my-auto bg-[#b1c9ce]">
         <div>
           <img
@@ -82,7 +82,6 @@ function login() {
             <button
               className="text-center font-light italic mx-4 mt-2 underline text-[#185866]  h-[%100] p-1 w-auto"
               type="submit"
-              onClick=""
             >
               Recordar contraseña
             </button>
