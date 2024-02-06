@@ -41,7 +41,7 @@ function dashboard_mecanico() {
             />
             <Link to="/mreparaciones">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Reparaciones
+                Tipos de Reparaciones
               </button>
             </Link>
           </div>

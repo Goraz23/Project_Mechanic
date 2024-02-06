@@ -99,36 +99,6 @@ function reparaciones_admin() {
   return (
     <>
     <Navbar_admin/>
-      <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
-        <div className="items-center ">
-          <Tupla
-            tupla="Tipo de reparación"
-            dato="text"
-            value={tipoReparacion.nombre_tipo_reparacion}
-            change={(e)=>valueChange(e, 'nombre_tipo_reparacion')}
-            descripcion="Ingresa la reparación que complementará el trabajo"
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Descripción"
-            dato="text"
-            value={tipoReparacion.detalles_tipo_reparacion}
-            change={(e)=>valueChange(e, 'detalles_tipo_reparacion')}
-            descripcion="Ingresa que se hará en esta reparación"
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Precio"
-            dato="number"
-            value={tipoReparacion.precio_tipo_reparacion}
-            change={(e)=> valueChange(e, 'precio_tipo_reparacion')}
-            descripcion="Ingresa el precio de la reparación asignada"
-          />
-        </div>
-          <Boton_agregar  subir={AddReparacion} agregar="Agregar reparación del trabajo" />
-      </div>
       <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
@@ -137,7 +107,6 @@ function reparaciones_admin() {
               <th className="p-2">Tipo de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
-              <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
@@ -147,30 +116,6 @@ function reparaciones_admin() {
                 <td>{reparacion.nombre_tipo_reparacion}</td>
                 <td>{reparacion.detalles_tipo_reparacion}</td>
                 <td>{reparacion.precio_tipo_reparacion}</td>
-                <td className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => deleteReparacion(reparacion.id_tipo_reparacion)}
-                    className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                  >
-                    <box-icon
-                      name="trash"
-                      type="solid"
-                      color="#ffffff"
-                      className="items-center"
-                    ></box-icon>
-                  </button>
-                  <button
-                    type="button"
-                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                  >
-                    <box-icon
-                      name="info-circle"
-                      type="solid"
-                      color="#ffffff"
-                    ></box-icon>
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>
