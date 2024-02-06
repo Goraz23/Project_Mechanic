@@ -14,7 +14,6 @@ const connection = mysql.createConnection({
   database: "geovani_mechanic",
 });
 
-
 connection.connect((error) => {
   if (error) {
     console.log("ERROR DE CONEXIÓN", error);
@@ -22,6 +21,33 @@ connection.connect((error) => {
     console.log("CONEXIÓN EXITOSA");
   }
 });
+
+app.listen(8082, () => {
+  console.log("ESCUCHANDO EN EL PUERTO 8082");
+});
+
+// ! API PARA EL LOGIN 
+app.post('/login', (req, res) => {
+  const  email = req.body.email
+  const pass  = req.body.pass
+  
+
+  const query = 'SELECT * FROM mechanic WHERE email = ? AND pass = ?';
+  connection.query(query, [email, pass], (error, results) => {
+
+    if (error) throw error;
+    if (results.length > 0) {
+      
+      const user = results[0];
+      res.json({ success: true, role: user.rol_id });
+    } else { 
+      res.json({ success: false, message: 'Credenciales incorrectas' });
+    }
+  });
+});
+
+
+// ! APIS PARA MECANICOS 
 
 //GET ALL MECHANICS
 app.post("/addMechanic", (req, res) => {
@@ -70,26 +96,8 @@ app.delete("/deleteMechanic/:id", (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
-  const  email = req.body.email
-  const pass  = req.body.pass
-  
 
-  const query = 'SELECT * FROM mechanic WHERE email = ? AND pass = ?';
-  connection.query(query, [email, pass], (error, results) => {
-
-    if (error) throw error;
-    if (results.length > 0) {
-      
-      const user = results[0];
-      res.json({ success: true, role: user.rol_id });
-    } else { 
-      res.json({ success: false, message: 'Credenciales incorrectas' });
-    }
-  });
-});
-
-//ALL MATERIAL
+// ! APIS PARA LOS  MATERIAES
 app.post("/addMaterial", (req, res) => {
   const material = req.body.material;
   const precio = req.body.precio;
@@ -138,11 +146,7 @@ app.delete('/delateMaterial/:id',(req,res)=>{
   });
 })
 
-
-
-
-
-//ALL VEHÍCULOS
+// !API PARA LOS VEHÍCULOS
 app.post("/addVehiculo", (req, res) => {
   const placa = req.body.placa;
   const modelo = req.body.modelo;
@@ -191,7 +195,7 @@ app.delete('/delateVehiculo/:id',(req,res)=>{
   });
 })
 
-//ALL TIPO REPARACIONES
+// ! APIS PARA TIPO  DE REPARACIONES
 app.post("/addTipoReparacion", (req, res) => {
   const nombre_tipo_reparacion = req.body.nombre_tipo_reparacion;
   const detalles_tipo_reparacion = req.body.detalles_tipo_reparacion;
@@ -297,6 +301,9 @@ app.delete('/delateTrabajos/:id',(req,res)=>{
   });
 })
 
-app.listen(8082, () => {
-  console.log("ESCUCHANDO EN EL PUERTO 8082");
-});
+// ! API PARA TRABAJO
+
+
+// ! API REPARACIÓN - MATERIAL
+
+
