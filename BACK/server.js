@@ -241,6 +241,61 @@ app.delete('/delateTipoReparacion/:id',(req,res)=>{
   });
 })
 
+//ALL TRABAJOS
+
+app.post("/addTrabajo", (req, res) => {
+  const nombre_trabajo = req.body.nombre_trabajo;
+  const descripcion_trabajo = req.body.descripcion_trabajo;
+  const fecha_inicio = req.body.fecha_inicio;
+  const fecha_final =  req.body.fecha_final;
+  const mechanic_id = req.body.mechanic_id;
+  const vehiculos_id = req.body.vehiculos_id;
+
+  const addTrabajo = `INSERT INTO trabajos (nombre_trabajo, descripcion_trabajo, fecha_inicio, fecha_final, mechanic_id, vehiculos_id) VALUES(?, ?, ?, ?, ?, ?)`;
+
+  connection.query(addTrabajo, [nombre_trabajo, descripcion_trabajo, fecha_inicio,fecha_final, mechanic_id, vehiculos_id], (err, result) => {
+    if (err) return res.json({ error : "error al agregar trabajo", err });
+    return res.json({ trabajo : result });
+  });
+});
+
+app.get("/viewTrabajos", (req, res) => {
+  const viewTrabajos = `SELECT * FROM trabajos`;
+  connection.query(viewTrabajos, (err, result) => {
+    if (err) return res.json({ error: "error al ver los trabajos", err });
+    return res.json({ trabajo: result });
+  });
+});
+
+app.put("/updateTrabajos/:id", (req, res) => {
+  const nombre_trabajo = req.body.nombre_trabajo;
+  const detalles_trabajo = req.body.detalles_trabajo;
+  const fecha_inicio = req.body.fecha_inicio;  
+  const fecha_final = req.body.fecha_final; 
+  const mechanic_id = req.body.mechanic_id; 
+  const vehiculos_id = req.body.vehiculos_id; 
+  const id_trabajo = req.params.id;
+
+  const updateTipoReparacion = "UPDATE trabajos SET nombre_trabajo = ?, detalles_trabajo = ?, fecha_inicio = ? WHERE id_trabajo  = ?";
+
+  connection.query(
+      updateTipoReparacion,
+      [nombre_trabajo, detalles_trabajo, fecha_inicio, fecha_final, mechanic_id, vehiculos_id, id_trabajo],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar el tipo de reparacion", err });
+          return res.json({ trabajo: result });
+      }
+  );
+});
+
+app.delete('/delateTrabajos/:id',(req,res)=>{
+  const id_trabajo = req.params.id;
+  const deleteTrabajos = `DELETE FROM trabajos WHERE id_trabajo = ?`;
+  connection.query(deleteTrabajos, [id_trabajo], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el trabajo", err });
+    return res.json({ trabajo: result });
+  });
+})
 
 app.listen(8082, () => {
   console.log("ESCUCHANDO EN EL PUERTO 8082");
