@@ -11,7 +11,9 @@ function materiales_admin() {
     cantidad: 0,
   });
 
+
   const [viewMaterial, setViewMaterial] = useState([]);
+  const [refresh, setRefresh] = useState(true)
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMaterial", {
@@ -25,7 +27,7 @@ function materiales_admin() {
         setViewMaterial(materiales.materiales);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, [viewMaterial]);
+  }, [refresh]);
 
   const AddMaterial = async (e) => {
     try {
@@ -40,6 +42,7 @@ function materiales_admin() {
       const result = await response.json();
       console.log(result);
 
+      setRefresh(!refresh)
       setMaterial({
         material: "",
         precio: 0,

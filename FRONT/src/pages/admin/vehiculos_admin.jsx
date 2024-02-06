@@ -12,6 +12,7 @@ function Vehiculos_admin() {
   });
 
   const [viewVehiculo, setviewVehiculo] = useState([]);
+  const [refresh, setRefresh ] = useState(true)
 
   useEffect(() => {
     fetch("http://localhost:8082/viewVehiculo", {
@@ -25,7 +26,7 @@ function Vehiculos_admin() {
         setviewVehiculo(vehiculos.vehiculos);
       })
       .catch((error) => console.log("Error fetching data:", error));
-  }, [viewVehiculo]);
+  }, [refresh]);
 
   const addVehiculo = async (e) => {
     try {
@@ -40,6 +41,7 @@ function Vehiculos_admin() {
       const result = await response.json();
       console.log(result);
 
+      setRefresh(!refresh)
       setVehiculos({
         placa: "",
         modelo: "",
