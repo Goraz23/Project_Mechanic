@@ -125,7 +125,7 @@ app.put("/updateMaterial/:id", (req, res) => {
   const cantidad = req.body.cantidad;  
   const id_materials = req.params.id;
 
-  const updateMaterial = "UPDATE materials SET material = ?, precio = ?, cantidad = ? WHERE id_materials = ?";
+  const updateMaterial = "UPDATE materials SET materials = ?, precio = ?, cantidad = ? WHERE id_materials = ?";
 
   connection.query(
       updateMaterial,

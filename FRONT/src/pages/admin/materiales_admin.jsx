@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_admin from "../../components/admin/navbar_admin";
-
+import Editar_material from "../../components/mod/editar_material";
 
 function materiales_admin() {
   const [material, setMaterial] = useState({
@@ -12,6 +12,8 @@ function materiales_admin() {
   });
 
   const [viewMaterial, setViewMaterial] = useState([]);
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Estado para controlar si el modal de edición está abierto
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMaterial", {
@@ -74,7 +76,6 @@ function materiales_admin() {
       const result = await response.json();
       console.log(result);
 
-      // Después de eliminar, actualiza la lista de mecánicos
       if (result.success) {
         setViewMaterial(
           viewMaterial.filter(
@@ -87,6 +88,23 @@ function materiales_admin() {
     } catch (error) {
       console.error("Error al eliminar material", error);
     }
+  };
+
+  const openEditModal = (material) => {
+    setSelectedMaterial(material);
+    setIsEditModalOpen(true); // Abre el modal de edición
+  };
+
+  const closeEditModal = () => {
+    setSelectedMaterial(null);
+    setIsEditModalOpen(false); // Cierra el modal de edición
+  };
+
+  const valueChange = (e, values) => {
+    setMaterial({
+      ...material,
+      [values]: e.target.value,
+    });
   };
 
   // const updateMechanic = async (id, updatedMechanic) => {
@@ -117,19 +135,19 @@ function materiales_admin() {
   //   updateMechanic(mecanico.id_mechanic, updatedMechanic);
   // }}>Actualizar</td>
 
-  const valueChange = (e, values) => {
-    setMaterial({
-      ...material,
-      [values]: e.target.value,
-    });
-  };
+  // const valueChange = (e, values) => {
+  //   setMaterial({
+  //     ...material,
+  //     [values]: e.target.value,
+  //   });
+  // };
 
   console.log(material);
   console.log(viewMaterial);
 
   return (
     <>
-    <Navbar_admin />
+      <Navbar_admin />
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
@@ -193,7 +211,8 @@ function materiales_admin() {
                   </button>
                   <button
                     type="button"
-                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                    onClick={() => openEditModal(material)} // Abre el modal de edición con el material seleccionado
+                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2"
                   >
                     <box-icon
                       name="info-circle"
@@ -201,6 +220,21 @@ function materiales_admin() {
                       color="#ffffff"
                     ></box-icon>
                   </button>
+                  <Editar_material
+                      id={selectedMaterial ? selectedMaterial.id : null}
+                      isOpen={isEditModalOpen} // Propiedad que controla si el modal de edición está abierto o cerrado
+                      onClose={closeEditModal} // Función para cerrar el modal de edición
+                      onConfirm={(editedMaterial) => {
+                        console.log("Material editado:", editedMaterial);
+                      }}
+                      message="Editar Material"
+                      inputPlaceholder="Nuevo Valor"
+                      inputValue={
+                        selectedMaterial ? selectedMaterial.material : ""
+                      }
+                      onInputChange={(e) => valueChange(e, "material")}
+                      material={selectedMaterial}
+                    />
                 </td>
               </tr>
             ))}
