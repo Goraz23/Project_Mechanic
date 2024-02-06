@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
-function materiales_admin() {
+function materiales_mecanico() {
   const [material, setMaterial] = useState({
     material: "",
     precio: 0,
@@ -106,7 +106,6 @@ function materiales_admin() {
               <th className="p-2">Material</th>
               <th className="p-2">Precio</th>
               <th className="p-2">Cantidad</th>
-              <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
@@ -116,30 +115,7 @@ function materiales_admin() {
                 <td>{material.material}</td>
                 <td>{material.precio}</td>
                 <td>{material.Cantidad}</td>
-                <td className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => deleteMaterial(material.id_materials)}
-                    className="  text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                  >
-                    <box-icon
-                      name="trash"
-                      type="solid"
-                      color="#ffffff"
-                      className="items-center"
-                    ></box-icon>
-                  </button>
-                  <button
-                    type="button"
-                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                  >
-                    <box-icon
-                      name="info-circle"
-                      type="solid"
-                      color="#ffffff"
-                    ></box-icon>
-                  </button>
-                </td>
+              
               </tr>
             ))}
           </tbody>
@@ -149,4 +125,4 @@ function materiales_admin() {
   );
 }
 
-export default materiales_admin;
+export default materiales_mecanico;
