@@ -152,7 +152,7 @@ app.post("/addVehiculo", (req, res) => {
   const modelo = req.body.modelo;
   const descripcion = req.body.descripcion;
 
-  const addPlaca = `INSERT INTO vehiculos (placa, modelo, descripcion) VALUES(?, ?, ?)`;
+  const addVehiculo = `INSERT INTO vehiculos (placa, modelo, descripcion) VALUES(?, ?, ?)`;
 
   connection.query(addVehiculo, [placa, modelo, descripcion], (err, result) => {
     if (err) return res.json({ error: "error al agregar vehículo", err });
@@ -172,13 +172,13 @@ app.put("/updateVehiculo/:id", (req, res) => {
   const placa = req.body.placa;
   const modelo = req.body.modelo;
   const descripcion = req.body.descripcion;  
-  const id_vehiculo = req.params.id;
+  const id_vehiculos = req.params.id;
 
-  const updateMaterial = "UPDATE vehiculos SET placa = ?, modelo = ?, descripcion = ? WHERE id_vehiculo  = ?";
+  const updateVehiculo = "UPDATE vehiculos SET placa = ?, modelo = ?, descripcion = ? WHERE id_vehiculos  = ?";
 
   connection.query(
-      updateMaterial,
-      [placa, modelo, descripcion, id_vehiculo],
+      updateVehiculo,
+      [placa, modelo, descripcion, id_vehiculos],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar vehículo", err });
           return res.json({ vehiculo: result });
@@ -187,11 +187,11 @@ app.put("/updateVehiculo/:id", (req, res) => {
 });
 
 app.delete('/delateVehiculo/:id',(req,res)=>{
-  const id_vehiculo = req.params.id;
-  const deleteVehiculo = `DELETE FROM vehiculo WHERE id_vehiculo = ?`;
-  connection.query(deleteVehiculo, [id_vehiculo], (err, result) => {
+  const id_vehiculos = req.params.id;
+  const deleteVehiculo = `DELETE FROM vehiculos WHERE id_vehiculos = ?`;
+  connection.query(deleteVehiculo, [id_vehiculos], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el vehículo", err });
-    return res.json({ vehiculo: result });
+    return res.json({ vehiculos: result });
   });
 })
 
@@ -228,7 +228,7 @@ app.put("/updateTipoReparacion/:id", (req, res) => {
 
   connection.query(
       updateTipoReparacion,
-      [nombre_tipo_reparacion, modelo, descripcion, id_vehiculo],
+      [nombre_tipo_reparacion, detalles_tipo_reparacion, precio_tipo_reparacion, id_tipo_reparacion],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar el tipo de reparacion", err });
           return res.json({ tipo_reparacion: result });
@@ -245,7 +245,7 @@ app.delete('/delateTipoReparacion/:id',(req,res)=>{
   });
 })
 
-//ALL TRABAJOS
+//!Apis para TRABAJOS
 
 app.post("/addTrabajo", (req, res) => {
   const nombre_trabajo = req.body.nombre_trabajo;
@@ -280,10 +280,10 @@ app.put("/updateTrabajos/:id", (req, res) => {
   const vehiculos_id = req.body.vehiculos_id; 
   const id_trabajo = req.params.id;
 
-  const updateTipoReparacion = "UPDATE trabajos SET nombre_trabajo = ?, detalles_trabajo = ?, fecha_inicio = ? WHERE id_trabajo  = ?";
+  const updateTrabajo = "UPDATE trabajos SET nombre_trabajo = ?, detalles_trabajo = ?, fecha_inicio = ? WHERE id_trabajo  = ?";
 
   connection.query(
-      updateTipoReparacion,
+      updateTrabajo,
       [nombre_trabajo, detalles_trabajo, fecha_inicio, fecha_final, mechanic_id, vehiculos_id, id_trabajo],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar el tipo de reparacion", err });
@@ -291,6 +291,7 @@ app.put("/updateTrabajos/:id", (req, res) => {
       }
   );
 });
+
 
 app.delete('/delateTrabajos/:id',(req,res)=>{
   const id_trabajo = req.params.id;
@@ -301,9 +302,56 @@ app.delete('/delateTrabajos/:id',(req,res)=>{
   });
 })
 
-// ! API PARA TRABAJO
+//!APIS PARA REPARACION MATERIAL
+
+app.post("/addReparacionMaterial", (req, res) => {
+  const materials_id = req.body.materials_id;
+  const tipo_reparacion_id = req.body.tipo_reparacion_id;
+  const precio_reparacion = req.body.precio_reparacion;
+  const horas_reparacion =  req.body.horas_reparacion;
+
+  const addReparacionMaterial = `INSERT INTO tipo_reparacion_material (materials_id, tipo_reparacion_id, precio_reparacion, horas_reparacion) VALUES(?, ?, ?, ?)`;
+
+  connection.query(addReparacionMaterial, [materials_id, tipo_reparacion_id, precio_reparacion, horas_reparacion], (err, result) => {
+    if (err) return res.json({ error : "error al agregar Reparacion Material", err });
+    return res.json({ tipo_reparacion_material : result });
+  });
+});
+
+app.get("/viewReparacionMaterial", (req, res) => {
+  const viewReparacionMaterial = `SELECT * FROM tipo_reparacion_material`;
+  connection.query(viewReparacionMaterial, (err, result) => {
+    if (err) return res.json({ error: "error al ver los Reparacion Material", err });
+    return res.json({ tipo_reparacion_material: result });
+  });
+});
+
+app.put("/updateReparacionMaterial/:id", (req, res) => {
+  const materials_id = req.body.materials_id;
+  const tipo_reparacion_id = req.body.tipo_reparacion_id;
+  const precio_reparacion = req.body.precio_reparacion;
+  const horas_reparacion =  req.body.horas_reparacion;
+  const id_tipo_reparacion_material = req.params.id;
+
+  const updateReparacionMaterial = "UPDATE tipo_reparacion_material SET materials_id = ?, tipo_reparacion_id = ?, precio_reparacion = ?, horas_reparacion = ? WHERE id_tipo_reparacion_material  = ?";
+
+  connection.query(
+      updateReparacionMaterial,
+      [materials_id, tipo_reparacion_id, precio_reparacion, horas_reparacion, id_tipo_reparacion_material],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar la reparacion material", err });
+          return res.json({ tipo_reparacion_material: result });
+      }
+  );
+});
 
 
-// ! API REPARACIÓN - MATERIAL
-
+app.delete('/delateReparacionMaterial/:id',(req,res)=>{
+  const id_tipo_reparacion_material = req.params.id;
+  const delateReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
+  connection.query(delateReparacionMaterial, [id_tipo_reparacion_material], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el trabajo", err });
+    return res.json({ tipo_reparacion_material: result });
+  });
+})
 
