@@ -1,25 +1,24 @@
-
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
-import Navbar_mecanico from '../../components/client/navbar_mecanico'
+import Navbar_mecanico from "../../components/client/navbar_mecanico";
 
 function Reparaciones_mecanico() {
-
   const [tipoReparacion, setTipoReparacion] = useState({
     nombre_tipo_reparacion: "",
-    detalles_tipo_reparacion: '',
+    detalles_tipo_reparacion: "",
     precio_tipo_reparacion: 0,
   });
 
-  const valueChange = (e, values) =>{
+  const valueChange = (e, values) => {
     setTipoReparacion({
-      ...tipoReparacion, [values]: e.target.value
-    })
-  }
+      ...tipoReparacion,
+      [values]: e.target.value,
+    });
+  };
 
   const [viewReparacion, setViewReparacion] = useState([]);
-  const [refresh, setRefresh] = useState(true)
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:8082/viewTipoReparacion", {
@@ -33,7 +32,7 @@ function Reparaciones_mecanico() {
         setViewReparacion(tipo_reparacion.tipo_reparacion);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  },[refresh]);
+  }, [refresh]);
 
   const AddReparacion = async (e) => {
     try {
@@ -48,7 +47,7 @@ function Reparaciones_mecanico() {
       const result = await response.json();
       console.log(result);
 
-      setRefresh(!refresh)
+      setRefresh(!refresh);
       setTipoReparacion({
         nombre_tipo_reparacion: "",
         detalles_tipo_reparacion: "",
@@ -99,7 +98,7 @@ function Reparaciones_mecanico() {
   };
   return (
     <>
-        <Navbar_mecanico/>
+      <Navbar_mecanico />
       <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
@@ -108,6 +107,7 @@ function Reparaciones_mecanico() {
               <th className="p-2">Tipo de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
+              <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
@@ -117,6 +117,18 @@ function Reparaciones_mecanico() {
                 <td>{reparacion.nombre_tipo_reparacion}</td>
                 <td>{reparacion.detalles_tipo_reparacion}</td>
                 <td>{reparacion.precio_tipo_reparacion}</td>
+                <td className="pt-2">
+                  <button
+                    type="button"
+                    className="text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                    >
+                    <box-icon
+                      name="plus-circle"
+                      type="solid"
+                      color="#ffffff"
+                    ></box-icon>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -124,6 +136,5 @@ function Reparaciones_mecanico() {
       </div>
     </>
   );
-
-}  
+}
 export default Reparaciones_mecanico;
