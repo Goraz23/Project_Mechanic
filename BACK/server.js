@@ -345,7 +345,6 @@ app.put("/updateReparacionMaterial/:id", (req, res) => {
   );
 });
 
-
 app.delete('/delateReparacionMaterial/:id',(req,res)=>{
   const id_tipo_reparacion_material = req.params.id;
   const delateReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
@@ -355,3 +354,56 @@ app.delete('/delateReparacionMaterial/:id',(req,res)=>{
   });
 })
 
+//! API REPARACION MATERIAL TRABAJO (RMT)
+app.post("/addRMT", (req, res) => {
+  const tipo_reparacion_material_id = req.body.tipo_reparacion_material_id;
+  const trabajo_id  = req.body.trabajo_id ;
+  const hora_trabajo_total = req.body.hora_trabajo_total;
+  const precio_trabajo_total = req.body.precio_trabajo_total;
+  const state_id = req.body.state_id
+
+  const addRMT = `INSERT INTO reparacion_materiales_trabajo (tipo_reparacion_material_id, trabajo_id , hora_trabajo_total, precio_trabajo_total, state_id) VALUES(?, ?, ?, ?, ?)`;
+
+  connection.query(addRMT, [tipo_reparacion_material_id, trabajo_id , hora_trabajo_total, precio_trabajo_total, state_id], (err, result) => {
+    if (err) return res.json({ error : "error al agregar RMB", err });
+    return res.json({ reparacion_materiales_trabajo : result });
+  });
+});
+
+app.get("/viewRMT", (req, res) => {
+  const viewRMT = `SELECT * FROM reparacion_materiales_trabajo `;
+  connection.query(viewRMT, (err, result) => {
+    if (err) return res.json({ error: "error al ver los RMB", err });
+    return res.json({ reparacion_materiales_trabajo: result });
+  });
+});
+
+
+app.put("/updateRMT/:id", (req, res) => {
+  const tipo_reparacion_material_id = req.body.tipo_reparacion_material_id;
+  const trabajo_id  = req.body.trabajo_id ;
+  const hora_trabajo_total = req.body.hora_trabajo_total;
+  const precio_trabajo_total = req.body.precio_trabajo_total;
+  const state_id = req.body.state_id
+  const id_reparacion_materiales_trabajo = req.params.id;
+
+  const updateRMT = "UPDATE reparacion_materiales_trabajo SET tipo_reparacion_material_id = ?, trabajo_id = ?, hora_trabajo_total = ?, horas_reparacion = ?, precio_trabajo_total = ?, state_id = ? WHERE id_reparacion_materiales_trabajo  = ?";
+
+  connection.query(
+      updateRMT,
+      [tipo_reparacion_material_id, trabajo_id, hora_trabajo_total, horas_reparacion, precio_trabajo_total, state_id, id_reparacion_materiales_trabajo],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar la reparacion material", err });
+          return res.json({ reparacion_materiales_trabajo: result });
+      }
+  );
+});
+
+app.delete('/delateRMT/:id',(req,res)=>{
+  const id_reparacion_materiales_trabajo = req.params.id;
+  const delateRMT = `DELETE FROM reparacion_materiales_trabajo WHERE id_reparacion_materiales_trabajo = ?`;
+  connection.query(delateRMT, [id_reparacion_materiales_trabajo ], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el RMT", err });
+    return res.json({ reparacion_materiales_trabajo: result });
+  });
+})
