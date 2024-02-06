@@ -9,8 +9,10 @@ import Reparaciones_admin from "../pages/admin/reparaciones_admin";
 import Dashboard_mecanico from "../pages/client/dashboard_mecanico";
 import Materiales_mecanico from '../pages/client/materiales_mecanico'
 import Reparaciones_mecanico from "../pages/client/reparaciones_mecanico";
+import Tipo_reparacion_material from "../pages/client/tipo_reparacion_material";
 import Title from "../components/title";
 import Trabajos_mecanico from "../pages/client/trabajos_mecanicos";
+import Control_RMT from "../pages/client/control";
 import Vehiculos_mecanico from "../pages/client/vehiculos_mecanico";
 export const routes = createBrowserRouter([
   {
@@ -51,8 +53,16 @@ export const routes = createBrowserRouter([
         element:<Reparaciones_mecanico/>
       },
       {
+        path: '/mtipo_rm',
+        element:<Tipo_reparacion_material/>
+      },
+      {
         path: '/mtrabajos',
         element:<Trabajos_mecanico/>
+      },
+      {
+        path: '/mcontrol_rmt',
+        element:<Control_RMT/>
       },
       {
         path:'/mvehiculos',

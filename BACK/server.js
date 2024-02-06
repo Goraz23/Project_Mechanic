@@ -236,7 +236,7 @@ app.put("/updateTipoReparacion/:id", (req, res) => {
   );
 });
 
-app.delete('/delateTipoReparacion/:id',(req,res)=>{
+app.delete('/deleteTipoReparacion/:id',(req,res)=>{
   const id_tipo_reparacion = req.params.id;
   const deleteTipoReparacion = `DELETE FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
   connection.query(deleteTipoReparacion, [id_tipo_reparacion], (err, result) => {
