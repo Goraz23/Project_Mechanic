@@ -35,14 +35,14 @@ function editar_material({id, isOpen, onClose, onConfirm, inputPlaceholder, inpu
       <div className="modal-overlay rounded-xl " onClick={onClose} />
       <div className="modal-container bg-white w-[40%] mx-auto rounded-lg shadow-xl z-50 ">
         <div className="modal-content  rounded-xl w-full p-4 bg-[#B2C9CE]">
-          <p className="text-lg font-bold">MATERIAL</p>
+        <p className="text-lg font-bold">MATERIAL</p>
           <input
-            className='w-fulltext-black border items-center rounded-lg p-1 m-auto'
+            className='w-full border text-black items-center rounded-lg p-1 m-auto'
             type="text"
             placeholder="Material"
             value={material}
             onChange={(e) => {
-              setMaterial(e.target.value);
+              setCantidad(e.target.value);
             }}
           />
           <p className="text-lg font-bold">PRECIO</p>

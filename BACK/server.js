@@ -161,8 +161,8 @@ app.post("/addVehiculo", (req, res) => {
 });
 
 app.get("/viewVehiculo", (req, res) => {
-  const viewVehículo = `SELECT * FROM vehiculos`;
-  connection.query(viewVehículo, (err, result) => {
+  const viewVehiculo = `SELECT * FROM vehiculos`;
+  connection.query(viewVehiculo, (err, result) => {
     if (err) return res.json({ error: "error al ver los vehículos", err });
     return res.json({ vehiculos: result });
   });
@@ -186,7 +186,7 @@ app.put("/updateVehiculo/:id", (req, res) => {
   );
 });
 
-app.delete('/delateVehiculo/:id',(req,res)=>{
+app.delete('/deleteVehiculo/:id',(req,res)=>{
   const id_vehiculos = req.params.id;
   const deleteVehiculo = `DELETE FROM vehiculos WHERE id_vehiculos = ?`;
   connection.query(deleteVehiculo, [id_vehiculos], (err, result) => {
@@ -236,7 +236,7 @@ app.put("/updateTipoReparacion/:id", (req, res) => {
   );
 });
 
-app.delete('/delateTipoReparacion/:id',(req,res)=>{
+app.delete('/delaeteTipoReparacion/:id',(req,res)=>{
   const id_tipo_reparacion = req.params.id;
   const deleteTipoReparacion = `DELETE FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
   connection.query(deleteTipoReparacion, [id_tipo_reparacion], (err, result) => {
@@ -293,7 +293,7 @@ app.put("/updateTrabajos/:id", (req, res) => {
 });
 
 
-app.delete('/delateTrabajos/:id',(req,res)=>{
+app.delete('/deleteTrabajos/:id',(req,res)=>{
   const id_trabajo = req.params.id;
   const deleteTrabajos = `DELETE FROM trabajos WHERE id_trabajo = ?`;
   connection.query(deleteTrabajos, [id_trabajo], (err, result) => {
@@ -345,10 +345,10 @@ app.put("/updateReparacionMaterial/:id", (req, res) => {
   );
 });
 
-app.delete('/delateReparacionMaterial/:id',(req,res)=>{
+app.delete('/deleteReparacionMaterial/:id',(req,res)=>{
   const id_tipo_reparacion_material = req.params.id;
-  const delateReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
-  connection.query(delateReparacionMaterial, [id_tipo_reparacion_material], (err, result) => {
+  const deleteReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
+  connection.query(deleteReparacionMaterial, [id_tipo_reparacion_material], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el trabajo", err });
     return res.json({ tipo_reparacion_material: result });
   });
@@ -401,8 +401,8 @@ app.put("/updateRMT/:id", (req, res) => {
 
 app.delete('/delateRMT/:id',(req,res)=>{
   const id_reparacion_materiales_trabajo = req.params.id;
-  const delateRMT = `DELETE FROM reparacion_materiales_trabajo WHERE id_reparacion_materiales_trabajo = ?`;
-  connection.query(delateRMT, [id_reparacion_materiales_trabajo ], (err, result) => {
+  const deleteRMT = `DELETE FROM reparacion_materiales_trabajo WHERE id_reparacion_materiales_trabajo = ?`;
+  connection.query(deleteRMT, [id_reparacion_materiales_trabajo ], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el RMT", err });
     return res.json({ reparacion_materiales_trabajo: result });
   });

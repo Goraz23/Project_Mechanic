@@ -80,7 +80,7 @@ function dashboard_admin() {
 
             <Link to="/">
             <button
-              className="text-center mx-4 mt-2  rounded-2xl h-[%100] p-1 text-black bg-[#b1c9ce]  w-[100%]"
+              className="text-center px-7  py-2 text-pretty text-xl mt-2  items-center rounded-3xl h-[%100] text-black bg-[#b1c9ce]  w-[100%]"
               type="submit"
             >
               Cerrar sesión
@@ -92,44 +92,14 @@ function dashboard_admin() {
       </div>
       <div className="right-0 fixed items-center m-auto h-full w-[80%] bg-[#B2C9CE]">
         <div className="h-[15%]">
-          <h1 className="[font-family:'Roboto-Regular',Helvetica]  font-normal m-auto text-center pt-10">
+          <h1 className="[font-family:'Roboto-Regular',Helvetica] text-xl  font-normal m-auto text-center pt-10">
             BIENVENIDO .....
-          </h1>
-
-          <h1 className="p-0 mb-0 text-center font-bold text-4xl">
-            REPARACIONES
           </h1>
         </div>
 
-        <div className="m-auto items-center gap-x-9 grid gap-y-9 h-[80%] p-5 ">
-          <div className="flex gap-3 h-full">
-            <Card
-              nombre="Ingresos"
-              cantidad="$3000"
-              porcetanje="%50.2 "
-              descripcion="durante el mes"
-              icono={ingresos}
-            />
-
-            <Card
-              nombre="Clientes"
-              cantidad="$3000"
-              porcetanje="%50.2 "
-              descripcion="durante el mes"
-              icono={clientes}
-            />
-
-            <Card
-              nombre="Autos"
-              cantidad="$3000"
-              porcetanje="%50.2 "
-              descripcion="durante el mes"
-              icono={autos}
-            />
-          </div>
+        <div className="m-auto  gap-x-9 grid gap-y-9 h-[45%] p-5 ">
           <h1 className="p-0 mb-0 text-center font-bold text-4xl">TRABAJOS</h1>
-
-          <div className="flex  gap-3 h-[100%]">
+          <div className="flex gap-3 h-[100%]">
             <Card
               nombre="Ingresos"
               cantidad="$3000"
