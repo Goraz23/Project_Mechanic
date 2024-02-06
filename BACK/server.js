@@ -187,62 +187,57 @@ app.delete('/delateVehiculo/:id',(req,res)=>{
   const deleteVehiculo = `DELETE FROM vehiculo WHERE id_vehiculo = ?`;
   connection.query(deleteVehiculo, [id_vehiculo], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el vehículo", err });
-    return res.json({ material: result });
+    return res.json({ vehiculo: result });
   });
 })
 
-//ALL REPARACIONES
-app.post("/addReparacion", (req, res) => {
-  const reparacion = req.body.reparacion;
-  const detalles = req.body.detalles;
-  const precio_reparaciones = req.body.precio_reparaciones;
-  const costo_material = req.body.costo_material;
-  const hora_inicio = req.body.hora_inicio;
-  const hora_final = req.body.hora_final;
-  const mechanic_id = req.body.mechanic_id;
-  const state_id = req.body.state_id;
+//ALL TIPO REPARACIONES
+app.post("/addTipoReparacion", (req, res) => {
+  const nombre_tipo_reparacion = req.body.nombre_tipo_reparacion;
+  const detalles_tipo_reparacion = req.body.detalles_tipo_reparacion;
+  const precio_tipo_reparacion = req.body.precio_tipo_reparacion;
  
 
-  const addReparacion = `INSERT INTO reparaciones (reparacion, detalles, precio_reparaciones, costo_material, hora_inicio, hora_final, mechanic_id, state_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const addReparacion = `INSERT INTO tipo_reparacion (nombre_tipo_reparacion, detalles_tipo_reparacion, precio_tipo_reparacion) VALUES(?, ?, ?)`;
 
-  connection.query(addReparacion, [reparacion, detalles, precio_reparaciones, costo_material, hora_inicio, hora_final, mechanic_id, state_id], (err, result) => {
-    if (err) return res.json({ error: "error al agregar vehículo", err });
-    return res.json({ vehiculo: result });
+  connection.query(addReparacion, [nombre_tipo_reparacion, detalles_tipo_reparacion, precio_tipo_reparacion], (err, result) => {
+    if (err) return res.json({ error : "error el tipo de reparacion", err });
+    return res.json({ tipo_reparacion : result });
   });
 });
 
-app.get("/viewVehículo", (req, res) => {
-  const viewVehículo = `SELECT * FROM vehiculos`;
+app.get("/viewTipoReparacion", (req, res) => {
+  const viewVehículo = `SELECT * FROM tipo_reparacion`;
   connection.query(viewVehículo, (err, result) => {
-    if (err) return res.json({ error: "error al ver los vehículos", err });
-    return res.json({ vehiculos: result });
+    if (err) return res.json({ error: "error al ver las reparaciones", err });
+    return res.json({ tipo_reparacion: result });
   });
 });
 
-app.put("/updateVehiculo/:id", (req, res) => {
-  const placa = req.body.placa;
-  const modelo = req.body.modelo;
-  const descripcion = req.body.descripcion;  
-  const id_vehiculo = req.params.id;
+app.put("/updateTipoReparacion/:id", (req, res) => {
+  const nombre_tipo_reparacion = req.body.nombre_tipo_reparacion;
+  const detalles_tipo_reparacion = req.body.detalles_tipo_reparacion;
+  const precio_tipo_reparacion = req.body.precio_tipo_reparacion;  
+  const id_tipo_reparacion = req.params.id;
 
-  const updateMaterial = "UPDATE vehiculos SET placa = ?, modelo = ?, descripcion = ? WHERE id_vehiculo  = ?";
+  const updateTipoReparacion = "UPDATE tipo_reparacion SET nombre_tipo_reparacion = ?, detalles_tipo_reparacion = ?, precio_tipo_reparacion = ? WHERE id_tipo_reparacion  = ?";
 
   connection.query(
-      updateMaterial,
-      [placa, modelo, descripcion, id_vehiculo],
+      updateTipoReparacion,
+      [nombre_tipo_reparacion, modelo, descripcion, id_vehiculo],
       (err, result) => {
-          if (err) return res.status(500).json({ error: "Error al editar vehículo", err });
-          return res.json({ vehiculo: result });
+          if (err) return res.status(500).json({ error: "Error al editar el tipo de reparacion", err });
+          return res.json({ tipo_reparacion: result });
       }
   );
 });
 
-app.delete('/delateVehiculo/:id',(req,res)=>{
-  const id_vehiculo = req.params.id;
-  const deleteVehiculo = `DELETE FROM vehiculo WHERE id_vehiculo = ?`;
-  connection.query(deleteVehiculo, [id_vehiculo], (err, result) => {
-    if (err) return res.json({ error: "error al eliminar el vehículo", err });
-    return res.json({ material: result });
+app.delete('/delateTipoReparacion/:id',(req,res)=>{
+  const id_tipo_reparacion = req.params.id;
+  const deleteTipoReparacion = `DELETE FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
+  connection.query(deleteTipoReparacion, [id_tipo_reparacion], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el tipo de reparacion", err });
+    return res.json({ tipo_reparacion: result });
   });
 })
 
