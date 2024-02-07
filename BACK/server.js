@@ -261,6 +261,18 @@ app.post("/addTipoReparacion", (req, res) => {
   });
 });
 
+app.get("/getTipoReparacion/:id", (req, res) => {
+  const id_tipo_reparacion = req.params.id;
+  const getTipoReparacion = `SELECT * FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
+connection.query(getTipoReparacion, [id_tipo_reparacion], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver los materiales por id", err });
+  } else {
+    return res.json({ tipo_reparacion: result });
+  }
+});
+});
+
 app.get("/viewTipoReparacion", (req, res) => {
   const viewVehículo = `SELECT * FROM tipo_reparacion`;
   connection.query(viewVehículo, (err, result) => {
@@ -287,7 +299,7 @@ app.put("/updateTipoReparacion/:id", (req, res) => {
   );
 });
 
-app.delete('/deleeteTipoReparacion/:id',(req,res)=>{
+app.delete('/deleteTipoReparacion/:id',(req,res)=>{
   const id_tipo_reparacion = req.params.id;
   const deleteTipoReparacion = `DELETE FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
   connection.query(deleteTipoReparacion, [id_tipo_reparacion], (err, result) => {
