@@ -283,7 +283,7 @@ app.post("/addTrabajo", (req, res) => {
 });
 
 app.get("/viewTrabajos", (req, res) => {
-  const viewTrabajos = `SELECT * FROM trabajos`;
+  const viewTrabajos = "CALL obtenerTrabajo();";
   connection.query(viewTrabajos, (err, result) => {
     if (err) return res.json({ error: "error al ver los trabajos", err });
     return res.json({ trabajo: result });
@@ -389,8 +389,9 @@ app.post("/addRMT", (req, res) => {
   });
 });
 
+
 app.get("/viewRMT", (req, res) => {
-  const viewRMT = `SELECT * FROM reparacion_materiales_trabajo `;
+  const viewRMT = `CALL obtener_reparacion_materiales_trabajo();`;
   connection.query(viewRMT, (err, result) => {
     if (err) return res.json({ error: "error al ver los RMB", err });
     return res.json({ reparacion_materiales_trabajo: result });
