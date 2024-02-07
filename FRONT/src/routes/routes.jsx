@@ -14,6 +14,11 @@ import Title from "../components/title";
 import Trabajos_mecanico from "../pages/client/trabajos_mecanicos";
 import Control_RMT from "../pages/client/control";
 import Vehiculos_mecanico from "../pages/client/vehiculos_mecanico";
+import { RouterPrivate } from "../components/routerPrivate/routerPrivate";
+
+const isAuth = localStorage.getItem("token")
+const permission = localStorage.getItem("permission")
+
 export const routes = createBrowserRouter([
   {
     path: "",
@@ -26,56 +31,83 @@ export const routes = createBrowserRouter([
 
       {
         path: "/amateriales",
-        element: <Materiales_admin />,
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2}>
+            <Materiales_admin />
+        </RouterPrivate>,
       },
       {
         path: "/atrabajos",
-        element: <Trabajos_admin />,
+        element:  <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2 }>
+              <Trabajos_admin />
+        </RouterPrivate>
       },
       {
         path: "/amecanicos",
-        element: <Mecanicos_admin />,
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2 }>
+         <Mecanicos_admin />,
+         </RouterPrivate>
       },
       {
         path: "/avehiculos",
-        element: <Vehiculos_admin />,
-      },
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2 }>
+        <Vehiculos_admin />,
+        </RouterPrivate>
+      },  
       {
         path: "/areparaciones",
-        element: <Reparaciones_admin />,
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2 }>
+        <Reparaciones_admin />,
+        </RouterPrivate>
       },
       {
         path:'/mmateriales',
-        element:<Materiales_mecanico/>
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+        <Materiales_mecanico/>
+        </RouterPrivate>
       },
       {
         path: '/mreparaciones',
-        element:<Reparaciones_mecanico/>
+        element:  <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+        <Reparaciones_mecanico/>
+        </RouterPrivate>
       },
       {
         path: '/mtipo_rm',
-        element:<Tipo_reparacion_material/>
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+        <Tipo_reparacion_material/>
+        </RouterPrivate>
       },
       {
         path: '/mtrabajos',
-        element:<Trabajos_mecanico/>
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+        <Trabajos_mecanico/>
+        </RouterPrivate>
       },
       {
         path: '/mcontrol_rmt',
-        element:<Control_RMT/>
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+        <Control_RMT/>
+        </RouterPrivate>
+
       },
       {
         path:'/mvehiculos',
-        element: <Vehiculos_mecanico/>
+        element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+         <Vehiculos_mecanico/>
+         </RouterPrivate>
       }
     ],
   },
   {
     path: "/adash",
-    element: <Dashboard_admin />,
+    element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 2 }>
+    <Dashboard_admin />,
+    </RouterPrivate>
   },
   {
     path:'/mdash',
-    element:<Dashboard_mecanico/>
+    element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+    <Dashboard_mecanico/>
+    </RouterPrivate>
   }
 ]);

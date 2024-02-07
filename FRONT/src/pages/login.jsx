@@ -17,7 +17,7 @@ function login() {
 
   console.log(user)
 
-  console.log('usuario logueado', user.alias)
+  
 
   const handleLogin = async () => {
     try {
@@ -32,8 +32,22 @@ function login() {
       const result = await response.json();
 
       if (response.ok) {
-        
         const { role } = result;
+        const { token } = result;
+        const {alias } = result
+        const {surname} = result
+        
+        
+        localStorage.setItem("permission", role)
+
+        localStorage.setItem("token", token)
+        console.log(token)
+
+        localStorage.setItem("alias", alias)
+        console.log(alias)
+
+        localStorage.setItem("surname",surname)
+
         
         if (role === 1) {
           window.location.replace("/mdash");
@@ -45,6 +59,7 @@ function login() {
       }
     } catch (error) {
       console.error("Error al intentar autenticar:", error);
+      
     }
   };
 
