@@ -107,7 +107,6 @@ function Reparaciones_mecanico() {
               <th className="p-2">Tipo de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
-              <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
@@ -117,18 +116,6 @@ function Reparaciones_mecanico() {
                 <td>{reparacion.nombre_tipo_reparacion}</td>
                 <td>{reparacion.detalles_tipo_reparacion}</td>
                 <td>{reparacion.precio_tipo_reparacion}</td>
-                <td className="pt-2">
-                  <button
-                    type="button"
-                    className="text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                    >
-                    <box-icon
-                      name="plus-circle"
-                      type="solid"
-                      color="#ffffff"
-                    ></box-icon>
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>

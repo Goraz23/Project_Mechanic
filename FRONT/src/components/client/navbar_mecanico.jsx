@@ -11,9 +11,9 @@ function navbar() {
 
         <BotonUno nombre="Control" ruta="/mcontrol_rmt" />
 
-        <BotonUno nombre="Tipos Reparaciones" ruta="/mreparaciones" />
-
         <BotonUno nombre="En Curso" ruta="/mtipo_rm" />
+
+        <BotonUno nombre="Tipos Reparaciones" ruta="/mreparaciones" />
 
         <BotonUno nombre="Materiales" ruta="/mmateriales" />
 

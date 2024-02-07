@@ -108,7 +108,7 @@ function mecanicos_admin() {
 
   // const updateMechanic = async (id, updatedMechanic) => {
   //   try {
-  //       const response = await fetch(`http://localhost:8082/updateMechanic/${id}`, {
+  //       const response = await fetch(http://localhost:8082/updateMechanic/${id}, {
   //           method: "PUT",
   //           headers: {
   //               "Content-Type": "application/json",

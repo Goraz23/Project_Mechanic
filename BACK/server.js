@@ -39,7 +39,8 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       
       const user = results[0];
-      res.json({ success: true, role: user.rol_id });
+      console.log(user)
+      res.json({ success: true, alias:user.alias, surname: user.surname , role: user.rol_id, token:'isAuth' });
     } else { 
       res.json({ success: false, message: 'Credenciales incorrectas' });
     }
@@ -117,6 +118,24 @@ app.delete("/deleteMechanic/:id", (req, res) => {
   });
 });
 
+app.put("/updateMechanic/:id", (req, res) => {
+  const alias = req.body.alias;
+  const surname = req.body.surname;
+  const email = req.body.email;
+  const pass = req.body.pass;
+  const id_mechanic = req.params.id;
+
+  const updateMechanic = "UPDATE mechanic SET alias = ?, surname = ?, email = ?, pass = ? WHERE id_mechanic = ?";
+
+  connection.query(
+      updateMechanic,
+      [alias, surname, email, pass, id_mechanic ],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar", err });
+          return res.json({ mechanic: result });
+      }
+  );
+});
 
 // ! APIS PARA LOS  MATERIAES
 app.post("/addMaterial", (req, res) => {
@@ -296,7 +315,7 @@ app.post("/addTrabajo", (req, res) => {
 });
 
 app.get("/viewTrabajos", (req, res) => {
-  const viewTrabajos = `SELECT * FROM trabajos`;
+  const viewTrabajos = "CALL obtenerTrabajo();";
   connection.query(viewTrabajos, (err, result) => {
     if (err) return res.json({ error: "error al ver los trabajos", err });
     return res.json({ trabajo: result });
@@ -402,8 +421,9 @@ app.post("/addRMT", (req, res) => {
   });
 });
 
+
 app.get("/viewRMT", (req, res) => {
-  const viewRMT = `SELECT * FROM reparacion_materiales_trabajo `;
+  const viewRMT = `CALL obtener_reparacion_materiales_trabajo();`;
   connection.query(viewRMT, (err, result) => {
     if (err) return res.json({ error: "error al ver los RMB", err });
     return res.json({ reparacion_materiales_trabajo: result });
