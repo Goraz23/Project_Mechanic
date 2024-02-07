@@ -46,6 +46,7 @@ function Trabajos_mecanico() {
           mechanic_id: '',
           vehiculos_id: '',
         });
+        window.location.reload(); // Recargar la página
       }
     } catch (error) {
       console.error('Error al registrar', error);
@@ -163,7 +164,7 @@ function Trabajos_mecanico() {
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            {viewTrabajos.map(item => (
+            {viewTrabajos.map((item) => (
               <tr key={item.id_trabajo}>
                 <td>{item.id_trabajo}</td>
                 <td>{item.nombre_trabajo}</td>

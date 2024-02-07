@@ -17,7 +17,7 @@ function Control_RMT() {
   useEffect(() => {
     fetch("http://localhost:8082/viewRMT")
       .then((response) => response.json())
-      .then((data) =>  setViewControl(data.reparacion_materiales_trabajo,[0]))
+      .then((data) =>  setViewControl(data.reparacion_materiales_trabajo[0]))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
@@ -53,7 +53,7 @@ function Control_RMT() {
 
   const deleteControl= async (id) => {
     try {
-      const response = await fetch("http://localhost:8082/delateRMT/${id}", {
+      const response = await fetch(`http://localhost:8082/delateRMT/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -70,13 +70,6 @@ function Control_RMT() {
     } catch (error) {
       console.error("Error al eliminar trabajo", error);
     }
-  };
-
-  const handleChange = (e, field) => {
-    setControl({
-      ...trabajo,
-      [field]: e.target.value,
-    });
   };
 
   const handleInputChange = (e, field) => {
