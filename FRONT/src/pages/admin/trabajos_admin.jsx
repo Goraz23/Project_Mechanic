@@ -148,7 +148,7 @@ function Trabajos_admin() {
       </div>
 
       {/* Table to display trabajos */}
-      <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE] rounded-t-lg items-center">
+      <div className="mt-5 overflow-auto h-[250px] mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE] rounded-t-lg items-center">
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
