@@ -1,39 +1,104 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
 
-function reparaciones_mecanico() {
+function Reparaciones_mecanico() {
+  const [tipoReparacion, setTipoReparacion] = useState({
+    nombre_tipo_reparacion: "",
+    detalles_tipo_reparacion: "",
+    precio_tipo_reparacion: 0,
+  });
+
+  const valueChange = (e, values) => {
+    setTipoReparacion({
+      ...tipoReparacion,
+      [values]: e.target.value,
+    });
+  };
+
+  const [viewReparacion, setViewReparacion] = useState([]);
+  const [refresh, setRefresh] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8082/viewTipoReparacion", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((tipo_reparacion) => {
+        setViewReparacion(tipo_reparacion.tipo_reparacion);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [refresh]);
+
+  const AddReparacion = async (e) => {
+    try {
+      const response = await fetch("http://localhost:8082/addTipoReparacion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tipoReparacion),
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      setRefresh(!refresh);
+      setTipoReparacion({
+        nombre_tipo_reparacion: "",
+        detalles_tipo_reparacion: "",
+        precio_tipo_reparacion: 0,
+      });
+
+      if (result.success) {
+        setViewReparacion([...viewReparacion, tipoReparacion]);
+      } else {
+        console.error("Error al registrar material");
+      }
+    } catch (error) {
+      console.error("Error al registrar", error);
+    }
+  };
+
+  const deleteReparacion = async (id_tipo_reparacion) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8082/deleteTipoReparacion/${id_tipo_reparacion}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id_tipo_reparacion: id_tipo_reparacion,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      console.log(result);
+
+      // Después de eliminar, actualiza la lista de mecánicos
+      if (result.success) {
+        setViewReparacion(
+          viewReparacion.filter(
+            (reparacion) => tipoReparacion.reparacion !== id_tipo_reparacion
+          )
+        );
+      } else {
+        console.error("Eliminado correctamente");
+      }
+    } catch (error) {
+      console.error("Error al eliminar material", error);
+    }
+  };
   return (
     <>
-    <Navbar_mecanico/>
-      <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
-        <div className="items-center ">
-          <Tupla
-            tupla="Tipo de reparación"
-            descripcion="Ingresa la reparación que complementará el trabajo"
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Descripción"
-            descripcion="Ingresa que se hará en esta reparación"
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Precio"
-            descripcion="Ingresa el precio de la reparación asignada"
-          />
-        </div>
-        <div className="items-center place-items-center ">
-          <Tupla
-            tupla="Horas atendidas"
-            descripcion="Ingresa las horas trabajadas"
-          />
-          <Boton_agregar agregar="Agregar reparación del trabajo" />
-        </div>
-      </div>
+      <Navbar_mecanico />
       <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
@@ -42,32 +107,34 @@ function reparaciones_mecanico() {
               <th className="p-2">Tipo de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
-              <th className="p-2">Horas atendidas</th>
               <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            <tr>
-              <td>1</td>
-              <td>Sera para pulir</td>
-              <td>Es para dejar el material...</td>
-              <td>0</td>
-              <td>0</td>
-              <td>Editar/Eliminar</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Material equis</td>
-              <td>Es para arreglar la tuberia de..</td>
-              <td>0</td>
-              <td>0</td>
-              <td>Editar/Eliminar</td>
-            </tr>
+            {viewReparacion.map((reparacion) => (
+              <tr key={reparacion.id_tipo_reparacion}>
+                <td>{reparacion.id_tipo_reparacion}</td>
+                <td>{reparacion.nombre_tipo_reparacion}</td>
+                <td>{reparacion.detalles_tipo_reparacion}</td>
+                <td>{reparacion.precio_tipo_reparacion}</td>
+                <td className="pt-2">
+                  <button
+                    type="button"
+                    className="text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                    >
+                    <box-icon
+                      name="plus-circle"
+                      type="solid"
+                      color="#ffffff"
+                    ></box-icon>
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </>
   );
 }
-
-export default reparaciones_mecanico;
+export default Reparaciones_mecanico;

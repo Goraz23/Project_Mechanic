@@ -236,7 +236,7 @@ app.put("/updateTipoReparacion/:id", (req, res) => {
   );
 });
 
-app.delete('/delaeteTipoReparacion/:id',(req,res)=>{
+app.delete('/deleeteTipoReparacion/:id',(req,res)=>{
   const id_tipo_reparacion = req.params.id;
   const deleteTipoReparacion = `DELETE FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
   connection.query(deleteTipoReparacion, [id_tipo_reparacion], (err, result) => {
@@ -319,7 +319,7 @@ app.post("/addReparacionMaterial", (req, res) => {
 });
 
 app.get("/viewReparacionMaterial", (req, res) => {
-  const viewReparacionMaterial = `SELECT * FROM tipo_reparacion_material`;
+  const viewReparacionMaterial = 'CALL obtenerReparacionesMaterial();';
   connection.query(viewReparacionMaterial, (err, result) => {
     if (err) return res.json({ error: "error al ver los Reparacion Material", err });
     return res.json({ tipo_reparacion_material: result });

@@ -13,6 +13,7 @@ function mecanicos_admin() {
   });
 
   const [viewMechanic, setViewMechanic] = useState([]);
+  const [refresh, setRefresh] = useState(true)
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMechanic", {
@@ -26,7 +27,7 @@ function mecanicos_admin() {
         setViewMechanic(mecanicos.mecanicos);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, [viewMechanic]);
+  }, [refresh]);
 
   const AddMechanic = async (e) => {
     try {
@@ -41,6 +42,7 @@ function mecanicos_admin() {
       const result = await response.json();
       console.log(result);
 
+      setRefresh(!refresh)
       setMechanic({
         alias: "",
         surname: "",
