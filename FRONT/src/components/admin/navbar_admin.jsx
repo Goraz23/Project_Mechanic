@@ -9,7 +9,7 @@ function navbar_admin() {
       <div className="flex flex-row py-3 h-[65px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
       <BotonUno nombre="Dashboard" ruta="/adash" />
 
-        <BotonUno nombre="Trabajos" ruta="/atrabajos" />
+        <BotonUno nombre="Trabajos" ruta="/atrabajos"/>
 
         <BotonUno nombre="Reparaciones" ruta="/areparaciones" />
 

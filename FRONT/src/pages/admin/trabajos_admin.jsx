@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Tupla from '../../components/tupla';
 import Boton_agregar from '../../components/boton_agregar';
-import Navbar_mecanico from '../../components/client/navbar_mecanico'
+import Navbar_admin from "../../components/admin/navbar_admin";
 
-function Trabajos_mecanico() {
+function Trabajos_admin() {
   const [trabajo, setTrabajo] = useState({
     nombre_trabajo: '',
     descripcion_trabajo: '',
@@ -13,14 +13,51 @@ function Trabajos_mecanico() {
     vehiculos_id: '',
   });
 
+  const [viewMechanic, setViewMechanic] = useState([])
+  useEffect(() => {
+    fetch("http://localhost:8082/viewMechanic", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((mecanicos) => {
+        setViewMechanic(mecanicos.mecanicos);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   const [viewTrabajos, setViewTrabajos] = useState([]);
+  const [selectedMechanic, setSelectedMechanic] = useState([])
+  const [selectedVehiculos, setSelectedVehiculos] = useState([])
+  const [refresh, setRefresh ] = useState(true)
+  const [viewVehiculo, setviewVehiculo] = useState([])
+  
 
   useEffect(() => {
     fetch('http://localhost:8082/viewTrabajos')
       .then(response => response.json())
       .then(data => setViewTrabajos(data.trabajo[0]))
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  }, [refresh]);
+
+
+  
+
+  useEffect(() => {
+    fetch("http://localhost:8082/viewVehiculo", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((vehiculos) => {
+        setviewVehiculo(vehiculos.vehiculos);
+      })
+      .catch((error) => console.log("Error fetching data:", error));
+  }, [refresh]);
 
   const addTrabajo = async () => {
     try {
@@ -80,11 +117,17 @@ function Trabajos_mecanico() {
       ...trabajo,
       [field]: e.target.value,
     });
+    
   };
+  console.log(trabajo)
+  
+
+  console.log(viewMechanic)
+  console.log(viewTrabajos)
 
   return (
     <>
-      <Navbar_mecanico/>
+            <Navbar_admin />
       <div className="mt-5 w-[50%] h-full mx-96 bg-[#FFF] items-center">
         {/* Input fields for trabajo */}
         <div className="items-center ">
@@ -123,7 +166,7 @@ function Trabajos_mecanico() {
             change={(e) => handleInputChange(e, "fecha_final")}
           />
         </div>
-        <div className="items-center ">
+        {/* <div className="items-center ">
           <Tupla
             tupla="Id_Mecanico"
             descripcion="Mecanico"
@@ -131,8 +174,16 @@ function Trabajos_mecanico() {
             value={trabajo.mechanic_id}
             change={(e) => handleInputChange(e, "mechanic_id")}
           />
-        </div>
-        <div className="items-center ">
+        </div> */}
+        <select value={selectedMechanic} onChange={(e) =>
+                        handleInputChange(e, 'mechanic_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {viewMechanic.map(mecha=> (
+          <option key={mecha.id_mechanic} value={mecha.id_mechanic}>
+            {mecha.alias}
+          </option>
+        ))}
+      </select>
+        {/* <div className="items-center ">
           <Tupla
             tupla="Id_Vehiculo"
             descripcion="Vehiculo"
@@ -140,8 +191,16 @@ function Trabajos_mecanico() {
             value={trabajo.vehiculos_id}
             change={(e) => handleInputChange(e, "vehiculos_id")}
           />
-        </div>
+        </div> */}
         {/* Boton_agregar component */}
+        <select value={selectedVehiculos} onChange={(e) =>
+                        handleInputChange(e, 'vehiculos_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {viewVehiculo.map(vehiculo=> (
+          <option key={vehiculo.id_vehiculos} value={vehiculo.id_vehiculos}>
+            {vehiculo.placa}
+          </option>
+        ))}
+      </select>
         <Boton_agregar 
         subir={addTrabajo} 
         agregar="Agregar trabajo del vehículo" />
@@ -207,6 +266,6 @@ function Trabajos_mecanico() {
       }
 
 
-export default Trabajos_mecanico;
+export default Trabajos_admin;
 
 
