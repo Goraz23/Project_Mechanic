@@ -72,7 +72,7 @@ app.post("/addMechanic", (req, res) => {
 
 
 app.get("/getUsers/id", (req, res) => {
-  const id_mechanic = req.body.id_mechanic;
+  const id_mechanic = req.body.id;
   const getUsers = `SELECT * FROM mechanic id_mechanic = ?`;
   connection.query(getUsers, [id_mechanic], (err, result) => {
     if (err) return res.json({ error: "error al ver los mecanicos", err });
@@ -92,7 +92,7 @@ app.put("/updateMechanic/:id", (req, res) => {
   const alias = req.body.alias;
   const surname = req.body.surname;
   const email = req.body.email;
-  const pass = req.body.pass;
+  const pass = req.body.pass; 
   const id_mechanic = req.params.id;
 
   const updateMechanic = "UPDATE mechanic SET alias = ?, surname = ?, email = ?, pass = ? WHERE id_mechanic = ?";
@@ -132,10 +132,21 @@ app.post("/addMaterial", (req, res) => {
   });
 });
 
+app.get("/getMaterial/:id", (req, res) => {
+  const id_materials = req.params.id;
+  const getMaterial = `SELECT * FROM materials WHERE id_materials = ?`;
+connection.query(getMaterial, [id_materials], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver los materiales por id", err });
+  } else {
+    return res.json({ materiales: result });
+  }
+});
+});
 app.get("/viewMaterial", (req, res) => {
   const viewMaterial = `SELECT * FROM materials`;
   connection.query(viewMaterial, (err, result) => {
-    if (err) return res.json({ error: "error al ver los mecanicos", err });
+    if (err) return res.json({ error: "error al ver los materiales", err });
     return res.json({ materiales: result });
   });
 });
@@ -143,14 +154,14 @@ app.get("/viewMaterial", (req, res) => {
 app.put("/updateMaterial/:id", (req, res) => {
   const material = req.body.material;
   const precio = req.body.precio;
-  const cantidad = req.body.cantidad;  
+  const Cantidad = req.body.cantidad;  
   const id_materials = req.params.id;
 
-  const updateMaterial = "UPDATE materials SET materials = ?, precio = ?, cantidad = ? WHERE id_materials = ?";
+  const updateMaterial = "UPDATE materials SET material = ?, precio = ?, Cantidad = ? WHERE id_materials = ?";
 
   connection.query(
       updateMaterial,
-      [material, precio, cantidad, id_materials],
+      [material, precio, Cantidad, id_materials],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar", err });
           return res.json({ material: result });

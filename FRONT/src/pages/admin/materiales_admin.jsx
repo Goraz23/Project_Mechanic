@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_admin from "../../components/admin/navbar_admin";
+import EditarMaterial from "../../components/mod/editar_material";
 
 
 function materiales_admin() {
@@ -13,7 +14,9 @@ function materiales_admin() {
 
 
   const [viewMaterial, setViewMaterial] = useState([]);
-  const [refresh, setRefresh] = useState(true)
+  const [refresh, setRefresh] = useState(true);
+  const [selectedMaterialId, setSelectedMaterialId] = useState(null); // Estado para almacenar el ID del mecánico seleccionado para editar
+  const [showEditModal, setShowEditModal] = useState(false); // Estado para controlar si se debe mostrar el componente de edición
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMaterial", {
@@ -92,6 +95,16 @@ function materiales_admin() {
     }
   };
 
+  const handleEditClick = (id) => {
+    setSelectedMaterialId(id);
+    
+    setShowEditModal(true);
+  };
+const handleCloseEditModal = () => {
+  setShowEditModal(false);
+  setSelectedMaterialId(null); // Restablecer el ID del mecánico seleccionado
+};
+
   // const updateMechanic = async (id, updatedMechanic) => {
   //   try {
   //       const response = await fetch(`http://localhost:8082/updateMechanic/${id}`, {
@@ -133,6 +146,10 @@ function materiales_admin() {
   return (
     <>
     <Navbar_admin />
+    {showEditModal && (
+    <EditarMaterial onClose={handleCloseEditModal} selectedMaterialId={selectedMaterialId} />
+    )}
+
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
@@ -196,6 +213,7 @@ function materiales_admin() {
                   </button>
                   <button
                     type="button"
+                    onClick={() => handleEditClick(material.id_materials)} // Llama a la función handleEditClick con el ID del mecánico
                     className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
                   >
                     <box-icon
