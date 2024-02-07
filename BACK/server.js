@@ -211,6 +211,18 @@ app.post("/addVehiculo", (req, res) => {
   });
 });
 
+app.get("/getVehiculo/:id", (req, res) => {
+  const id_vehiculos = req.params.id;
+  const getVehiculo = `SELECT * FROM vehiculos WHERE id_vehiculos = ?`;
+connection.query(getVehiculo, [id_vehiculos], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver el vehículo por id", err });
+  } else {
+    return res.json({ vehiculo: result });
+  }
+});
+});
+
 app.get("/viewVehiculo", (req, res) => {
   const viewVehiculo = `SELECT * FROM vehiculos`;
   connection.query(viewVehiculo, (err, result) => {

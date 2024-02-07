@@ -4,7 +4,7 @@ import foto from "../../image/perfil.png";
 function navbar() {
   return (
     <>
-      <div className="flex flex-row py-3 h-[65px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
+      <div className="flex flex-row pt-[8px] h-[80px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
       <BotonUno nombre="Dashboard" ruta="/mdash" />
 
         <BotonUno nombre="Trabajos" ruta="/mtrabajos" />
