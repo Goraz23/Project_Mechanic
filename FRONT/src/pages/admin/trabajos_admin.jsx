@@ -30,6 +30,9 @@ function Trabajos_admin() {
 
   const [viewTrabajos, setViewTrabajos] = useState([]);
   const [selectedMechanic, setSelectedMechanic] = useState([])
+  const [selectedVehiculos, setSelectedVehiculos] = useState([])
+  const [refresh, setRefresh ] = useState(true)
+  const [viewVehiculo, setviewVehiculo] = useState([])
   
 
   useEffect(() => {
@@ -37,7 +40,24 @@ function Trabajos_admin() {
       .then(response => response.json())
       .then(data => setViewTrabajos(data.trabajo[0]))
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  }, [refresh]);
+
+
+  
+
+  useEffect(() => {
+    fetch("http://localhost:8082/viewVehiculo", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((vehiculos) => {
+        setviewVehiculo(vehiculos.vehiculos);
+      })
+      .catch((error) => console.log("Error fetching data:", error));
+  }, [refresh]);
 
   const addTrabajo = async () => {
     try {
@@ -163,7 +183,7 @@ function Trabajos_admin() {
           </option>
         ))}
       </select>
-        <div className="items-center ">
+        {/* <div className="items-center ">
           <Tupla
             tupla="Id_Vehiculo"
             descripcion="Vehiculo"
@@ -171,8 +191,16 @@ function Trabajos_admin() {
             value={trabajo.vehiculos_id}
             change={(e) => handleInputChange(e, "vehiculos_id")}
           />
-        </div>
+        </div> */}
         {/* Boton_agregar component */}
+        <select value={selectedVehiculos} onChange={(e) =>
+                        handleInputChange(e, 'vehiculos_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {viewVehiculo.map(vehiculo=> (
+          <option key={vehiculo.id_vehiculos} value={vehiculo.id_vehiculos}>
+            {vehiculo.placa}
+          </option>
+        ))}
+      </select>
         <Boton_agregar 
         subir={addTrabajo} 
         agregar="Agregar trabajo del vehículo" />
