@@ -13,7 +13,24 @@ function Trabajos_admin() {
     vehiculos_id: '',
   });
 
+  const [viewMechanic, setViewMechanic] = useState([])
+  useEffect(() => {
+    fetch("http://localhost:8082/viewMechanic", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((mecanicos) => {
+        setViewMechanic(mecanicos.mecanicos);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   const [viewTrabajos, setViewTrabajos] = useState([]);
+  const [selectedMechanic, setSelectedMechanic] = useState([])
+  
 
   useEffect(() => {
     fetch('http://localhost:8082/viewTrabajos')
@@ -80,7 +97,13 @@ function Trabajos_admin() {
       ...trabajo,
       [field]: e.target.value,
     });
+    
   };
+  console.log(trabajo)
+  
+
+  console.log(viewMechanic)
+  console.log(viewTrabajos)
 
   return (
     <>
@@ -123,7 +146,7 @@ function Trabajos_admin() {
             change={(e) => handleInputChange(e, "fecha_final")}
           />
         </div>
-        <div className="items-center ">
+        {/* <div className="items-center ">
           <Tupla
             tupla="Id_Mecanico"
             descripcion="Mecanico"
@@ -131,7 +154,15 @@ function Trabajos_admin() {
             value={trabajo.mechanic_id}
             change={(e) => handleInputChange(e, "mechanic_id")}
           />
-        </div>
+        </div> */}
+        <select value={selectedMechanic} onChange={(e) =>
+                        handleInputChange(e, 'mechanic_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {viewMechanic.map(mecha=> (
+          <option key={mecha.id_mechanic} value={mecha.id_mechanic}>
+            {mecha.alias}
+          </option>
+        ))}
+      </select>
         <div className="items-center ">
           <Tupla
             tupla="Id_Vehiculo"
