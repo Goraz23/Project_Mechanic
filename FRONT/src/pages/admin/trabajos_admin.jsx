@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Tupla from '../../components/tupla';
 import Boton_agregar from '../../components/boton_agregar';
-import Navbar_mecanico from '../../components/client/navbar_mecanico'
+import Navbar_admin from "../../components/admin/navbar_admin";
 
-function Trabajos_mecanico() {
+function Trabajos_admin() {
   const [trabajo, setTrabajo] = useState({
     nombre_trabajo: '',
     descripcion_trabajo: '',
@@ -84,7 +84,7 @@ function Trabajos_mecanico() {
 
   return (
     <>
-      <Navbar_mecanico/>
+            <Navbar_admin />
       <div className="mt-5 w-[50%] h-full mx-96 bg-[#FFF] items-center">
         {/* Input fields for trabajo */}
         <div className="items-center ">
@@ -207,6 +207,6 @@ function Trabajos_mecanico() {
       }
 
 
-export default Trabajos_mecanico;
+export default Trabajos_admin;
 
 
