@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_admin from "../../components/admin/navbar_admin";
+import EditarMecanico from "../../components/mod/editar_mecanico";
 function mecanicos_admin() {
   const [mechanic, setMechanic] = useState({
     alias: "",
@@ -13,7 +14,9 @@ function mecanicos_admin() {
   });
 
   const [viewMechanic, setViewMechanic] = useState([]);
-  const [refresh, setRefresh] = useState(true)
+  const [refresh, setRefresh] = useState(true);
+  const [selectedMechanicId, setSelectedMechanicId] = useState(null); // Estado para almacenar el ID del mecánico seleccionado para editar
+  const [showEditModal, setShowEditModal] = useState(false); // Estado para controlar si se debe mostrar el componente de edición
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMechanic", {
@@ -94,6 +97,16 @@ function mecanicos_admin() {
     }
   };
 
+  const handleEditClick = (id) => {
+    setSelectedMechanicId(id);
+    setShowEditModal(true);
+  };
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    setSelectedMechanicId(null); // Restablecer el ID del mecánico seleccionado
+  };
+
+  
   // const updateMechanic = async (id, updatedMechanic) => {
   //   try {
   //       const response = await fetch(`http://localhost:8082/updateMechanic/${id}`, {
@@ -135,6 +148,10 @@ function mecanicos_admin() {
   return (
     <>
       <Navbar_admin />
+{showEditModal && (
+  <EditarMecanico onClose={handleCloseEditModal} selectedMechanicId={selectedMechanicId} />
+)}
+
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
@@ -208,15 +225,16 @@ function mecanicos_admin() {
                     ></box-icon>
                   </button>
                   <button
-                    type="button"
-                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                  >
-                    <box-icon
-                      name="info-circle"
-                      type="solid"
-                      color="#ffffff"
-                    ></box-icon>
-                  </button>
+        type="button"
+        onClick={() => handleEditClick(mecanico.id_mechanic)} // Llama a la función handleEditClick con el ID del mecánico
+        className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+      >
+        <box-icon
+          name="info-circle"
+          type="solid"
+          color="#ffffff"
+        ></box-icon>
+      </button>
                 </td>
               </tr>
             ))}
