@@ -319,7 +319,7 @@ app.post("/addReparacionMaterial", (req, res) => {
 });
 
 app.get("/viewReparacionMaterial", (req, res) => {
-  const viewReparacionMaterial = `SELECT * FROM tipo_reparacion_material`;
+  const viewReparacionMaterial = 'CALL obtenerReparacionesMaterial();';
   connection.query(viewReparacionMaterial, (err, result) => {
     if (err) return res.json({ error: "error al ver los Reparacion Material", err });
     return res.json({ tipo_reparacion_material: result });
