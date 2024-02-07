@@ -11,6 +11,13 @@ import autos from "../../image/autos_1.png";
 import reparacion from "../../image/reparacion.png"
 
 function dashboard_admin() {
+
+   const alias = localStorage.getItem("alias")
+   const surname = localStorage.getItem("surname")
+
+   const logout = () =>{
+    localStorage.clear()
+   }
   return (
     <>
       <div className="relative flex p-0 ">
@@ -78,22 +85,22 @@ function dashboard_admin() {
           </div>
           <div className="flex pb-5 flex-col self-center items-center ">
 
-            <Link to="/">
+          <Link to = "/">
             <button
               className="text-center mx-4 mt-2  rounded-2xl h-[%100] p-1 text-black bg-[#b1c9ce]  w-[100%]"
               type="submit"
+              onClick={logout}
             >
               Cerrar sesión
             </button>
             </Link>
-            
           </div>
         </div>
       </div>
       <div className="right-0 fixed items-center m-auto h-full w-[80%] bg-[#B2C9CE]">
         <div className="h-[15%]">
           <h1 className="[font-family:'Roboto-Regular',Helvetica]  font-normal m-auto text-center pt-10">
-            BIENVENIDO .....
+            BIENVENIDO {alias + " " +surname}
           </h1>
 
           <h1 className="p-0 mb-0 text-center font-bold text-4xl">
