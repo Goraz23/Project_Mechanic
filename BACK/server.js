@@ -338,6 +338,18 @@ app.post("/addTrabajo", (req, res) => {
   });
 });
 
+app.get("/getTrabajo/:id", (req, res) => {
+  const id_trabajo = req.params.id;
+  const getTrabajo = `SELECT * FROM trabajos WHERE id_trabajo = ?`;
+connection.query(getTrabajo, [id_trabajo], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver el trabajo por id", err });
+  } else {
+    return res.json({ trabajo: result });
+  }
+});
+});
+
 app.get("/viewTrabajos", (req, res) => {
   const viewTrabajos = "CALL obtenerTrabajo();";
   connection.query(viewTrabajos, (err, result) => {
