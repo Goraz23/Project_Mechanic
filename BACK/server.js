@@ -39,7 +39,8 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       
       const user = results[0];
-      res.json({ success: true, role: user.rol_id });
+      console.log(user)
+      res.json({ success: true, alias:user.alias, surname: user.surname , role: user.rol_id, token:'isAuth' });
     } else { 
       res.json({ success: false, message: 'Credenciales incorrectas' });
     }
@@ -94,6 +95,25 @@ app.delete("/deleteMechanic/:id", (req, res) => {
     if (err) return res.json({ error: "error al eliminar mecanicos", err });
     return res.json({ mecanicos: result });
   });
+});
+
+app.put("/updateMechanic/:id", (req, res) => {
+  const alias = req.body.alias;
+  const surname = req.body.surname;
+  const email = req.body.email;
+  const pass = req.body.pass;
+  const id_mechanic = req.params.id;
+
+  const updateMechanic = "UPDATE mechanic SET alias = ?, surname = ?, email = ?, pass = ? WHERE id_mechanic = ?";
+
+  connection.query(
+      updateMechanic,
+      [alias, surname, email, pass, id_mechanic ],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar", err });
+          return res.json({ mechanic: result });
+      }
+  );
 });
 
 
