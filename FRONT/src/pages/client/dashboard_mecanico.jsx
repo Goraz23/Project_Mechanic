@@ -41,29 +41,6 @@ function dashboard_mecanico() {
             </Link>
           </div>
 
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
-            <img
-              src={dos}
-              className="items-center h-[100%] pl-5 w-[17%] flex"
-            />
-            <Link to="/mreparaciones">
-              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Tipos de Reparaciones
-              </button>
-            </Link>
-          </div>
-
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
-            <img
-              src={dos}
-              className="items-center h-[100%] pl-5 w-[17%] flex"
-            />
-            <Link to="//mtipo_rm">
-              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Repaciones con Material
-              </button>
-            </Link>
-          </div>
 
           <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
@@ -73,6 +50,18 @@ function dashboard_mecanico() {
             <Link to="/mtrabajos">
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Trabajos
+              </button>
+            </Link>
+          </div>
+
+          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+            <img
+              src={dos}
+              className="items-center h-[100%] pl-5 w-[17%] flex"
+            />
+            <Link to="/mtipo_rm">
+              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
+                Repaciones
               </button>
             </Link>
           </div>
@@ -91,6 +80,18 @@ function dashboard_mecanico() {
 
           <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
+              src={dos}
+              className="items-center h-[100%] pl-5 w-[17%] flex"
+            />
+            <Link to="/mreparaciones">
+              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
+                Recursos
+              </button>
+            </Link>
+          </div>
+
+          {/* <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+            <img
               src={cinco}
               className="items-center h-[100%] pl-5 w-[20%] flex"
             />
@@ -98,8 +99,8 @@ function dashboard_mecanico() {
               <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
                 Materiales
               </button>
-            </Link>
-          </div>
+            </Link> 
+          </div> */}
           <div className="flex pb-5 flex-col self-center items-center ">
             <Link to="/">
             <button

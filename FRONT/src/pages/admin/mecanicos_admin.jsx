@@ -89,6 +89,7 @@ function mecanicos_admin() {
             (mecanico) => mecanico.id_mechanic !== id_mechanic
           )
         );
+        window.location.reload();
       } else {
         console.error("Error al eliminar mecánico");
       }

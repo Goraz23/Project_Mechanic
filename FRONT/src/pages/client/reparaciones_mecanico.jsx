@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Tupla from "../../components/tupla";
-import Boton_agregar from "../../components/boton_agregar";
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
+import Materiales_mecanico from '../client/materiales_mecanico'
+
 
 function Reparaciones_mecanico() {
   const [tipoReparacion, setTipoReparacion] = useState({
@@ -10,15 +10,9 @@ function Reparaciones_mecanico() {
     precio_tipo_reparacion: 0,
   });
 
-  const valueChange = (e, values) => {
-    setTipoReparacion({
-      ...tipoReparacion,
-      [values]: e.target.value,
-    });
-  };
-
   const [viewReparacion, setViewReparacion] = useState([]);
   const [refresh, setRefresh] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8082/viewTipoReparacion", {
@@ -64,43 +58,31 @@ function Reparaciones_mecanico() {
     }
   };
 
-  const deleteReparacion = async (id_tipo_reparacion) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8082/deleteTipoReparacion/${id_tipo_reparacion}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id_tipo_reparacion: id_tipo_reparacion,
-          }),
-        }
-      );
+  const filteredReparaciones = viewReparacion.filter((reparacion) =>
+    reparacion.nombre_tipo_reparacion.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-      const result = await response.json();
-      console.log(result);
-
-      // Después de eliminar, actualiza la lista de mecánicos
-      if (result.success) {
-        setViewReparacion(
-          viewReparacion.filter(
-            (reparacion) => tipoReparacion.reparacion !== id_tipo_reparacion
-          )
-        );
-      } else {
-        console.error("Eliminado correctamente");
-      }
-    } catch (error) {
-      console.error("Error al eliminar material", error);
-    }
-  };
   return (
     <>
       <Navbar_mecanico />
-      <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
-        <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
+      <div>
+        <Materiales_mecanico/>
+      </div>
+      <div className="mt-5 mx-auto max-w-lg">
+
+        <div>
+          <br></br>
+          <h1 className="text-xl font-bold text-gray-800 text-center">Buscar Tipo de Reparación</h1>
+          <br></br>
+        </div>
+        <input
+          type="text"
+          placeholder="Buscar tipo de reparación..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="my-3 p-2 w-full rounded-md border border-gray-300"
+        />
+        <table className="w-full  table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>
@@ -110,7 +92,7 @@ function Reparaciones_mecanico() {
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            {viewReparacion.map((reparacion) => (
+            {filteredReparaciones.map((reparacion) => (
               <tr key={reparacion.id_tipo_reparacion}>
                 <td>{reparacion.id_tipo_reparacion}</td>
                 <td>{reparacion.nombre_tipo_reparacion}</td>
@@ -124,4 +106,5 @@ function Reparaciones_mecanico() {
     </>
   );
 }
+
 export default Reparaciones_mecanico;
