@@ -9,13 +9,13 @@ function navbar() {
 
         <BotonUno nombre="Trabajos" ruta="/mtrabajos" />
 
+        <BotonUno nombre="Reparaciones" ruta="/mtipo_rm" />
+
         <BotonUno nombre="Control" ruta="/mcontrol_rmt" />
 
-        <BotonUno nombre="En Curso" ruta="/mtipo_rm" />
+        <BotonUno nombre="Recursos" ruta="/mreparaciones" />
 
-        <BotonUno nombre="Tipos Reparaciones" ruta="/mreparaciones" />
-
-        <BotonUno nombre="Materiales" ruta="/mmateriales" />
+        {/* <BotonUno nombre="Materiales" ruta="/mmateriales" /> */}
 
         <BotonUno nombre="Vehículos" ruta="/mvehiculos" />
 
