@@ -70,8 +70,10 @@ app.post("/addMechanic", (req, res) => {
   );
 });
 
+
+
 app.get("/getUsers/id", (req, res) => {
-  const id_mechanic = req.body.id_mechanic;
+  const id_mechanic = req.body.id;
   const getUsers = `SELECT * FROM mechanic id_mechanic = ?`;
   connection.query(getUsers, [id_mechanic], (err, result) => {
     if (err) return res.json({ error: "error al ver los mecanicos", err });
@@ -85,6 +87,25 @@ app.get("/viewMechanic", (req, res) => {
     if (err) return res.json({ error: "error al ver los mecanicos", err });
     return res.json({ mecanicos: result });
   });
+});
+
+app.put("/updateMechanic/:id", (req, res) => {
+  const alias = req.body.alias;
+  const surname = req.body.surname;
+  const email = req.body.email;
+  const pass = req.body.pass; 
+  const id_mechanic = req.params.id;
+
+  const updateMechanic = "UPDATE mechanic SET alias = ?, surname = ?, email = ?, pass = ? WHERE id_mechanic = ?";
+
+  connection.query(
+      updateMechanic,
+      [alias, surname, email, pass, id_mechanic ],
+      (err, result) => {
+          if (err) return res.status(500).json({ error: "Error al editar", err });
+          return res.json({ mechanic: result });
+      }
+  );
 });
 
 app.delete("/deleteMechanic/:id", (req, res) => {
@@ -130,10 +151,21 @@ app.post("/addMaterial", (req, res) => {
   });
 });
 
+app.get("/getMaterial/:id", (req, res) => {
+  const id_materials = req.params.id;
+  const getMaterial = `SELECT * FROM materials WHERE id_materials = ?`;
+connection.query(getMaterial, [id_materials], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver los materiales por id", err });
+  } else {
+    return res.json({ materiales: result });
+  }
+});
+});
 app.get("/viewMaterial", (req, res) => {
   const viewMaterial = `SELECT * FROM materials`;
   connection.query(viewMaterial, (err, result) => {
-    if (err) return res.json({ error: "error al ver los mecanicos", err });
+    if (err) return res.json({ error: "error al ver los materiales", err });
     return res.json({ materiales: result });
   });
 });
@@ -141,14 +173,14 @@ app.get("/viewMaterial", (req, res) => {
 app.put("/updateMaterial/:id", (req, res) => {
   const material = req.body.material;
   const precio = req.body.precio;
-  const cantidad = req.body.cantidad;  
+  const Cantidad = req.body.cantidad;  
   const id_materials = req.params.id;
 
-  const updateMaterial = "UPDATE materials SET materials = ?, precio = ?, cantidad = ? WHERE id_materials = ?";
+  const updateMaterial = "UPDATE materials SET material = ?, precio = ?, Cantidad = ? WHERE id_materials = ?";
 
   connection.query(
       updateMaterial,
-      [material, precio, cantidad, id_materials],
+      [material, precio, Cantidad, id_materials],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar", err });
           return res.json({ material: result });
@@ -179,9 +211,21 @@ app.post("/addVehiculo", (req, res) => {
   });
 });
 
+app.get("/getVehiculo/:id", (req, res) => {
+  const id_vehiculos = req.params.id;
+  const getVehiculo = `SELECT * FROM vehiculos WHERE id_vehiculos = ?`;
+connection.query(getVehiculo, [id_vehiculos], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver el vehículo por id", err });
+  } else {
+    return res.json({ vehiculo: result });
+  }
+});
+});
+
 app.get("/viewVehiculo", (req, res) => {
-  const viewVehículo = `SELECT * FROM vehiculos`;
-  connection.query(viewVehículo, (err, result) => {
+  const viewVehiculo = `SELECT * FROM vehiculos`;
+  connection.query(viewVehiculo, (err, result) => {
     if (err) return res.json({ error: "error al ver los vehículos", err });
     return res.json({ vehiculos: result });
   });
@@ -205,7 +249,7 @@ app.put("/updateVehiculo/:id", (req, res) => {
   );
 });
 
-app.delete('/delateVehiculo/:id',(req,res)=>{
+app.delete('/deleteVehiculo/:id',(req,res)=>{
   const id_vehiculos = req.params.id;
   const deleteVehiculo = `DELETE FROM vehiculos WHERE id_vehiculos = ?`;
   connection.query(deleteVehiculo, [id_vehiculos], (err, result) => {
@@ -227,6 +271,18 @@ app.post("/addTipoReparacion", (req, res) => {
     if (err) return res.json({ error : "error el tipo de reparacion", err });
     return res.json({ tipo_reparacion : result });
   });
+});
+
+app.get("/getTipoReparacion/:id", (req, res) => {
+  const id_tipo_reparacion = req.params.id;
+  const getTipoReparacion = `SELECT * FROM tipo_reparacion WHERE id_tipo_reparacion = ?`;
+connection.query(getTipoReparacion, [id_tipo_reparacion], (err, result) => {
+  if (err) {
+    return res.json({ error: "Error al ver los materiales por id", err });
+  } else {
+    return res.json({ tipo_reparacion: result });
+  }
+});
 });
 
 app.get("/viewTipoReparacion", (req, res) => {
@@ -312,7 +368,7 @@ app.put("/updateTrabajos/:id", (req, res) => {
 });
 
 
-app.delete('/delateTrabajos/:id',(req,res)=>{
+app.delete('/deleteTrabajos/:id',(req,res)=>{
   const id_trabajo = req.params.id;
   const deleteTrabajos = `DELETE FROM trabajos WHERE id_trabajo = ?`;
   connection.query(deleteTrabajos, [id_trabajo], (err, result) => {
@@ -364,10 +420,10 @@ app.put("/updateReparacionMaterial/:id", (req, res) => {
   );
 });
 
-app.delete('/delateReparacionMaterial/:id',(req,res)=>{
+app.delete('/deleteReparacionMaterial/:id',(req,res)=>{
   const id_tipo_reparacion_material = req.params.id;
-  const delateReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
-  connection.query(delateReparacionMaterial, [id_tipo_reparacion_material], (err, result) => {
+  const deleteReparacionMaterial = `DELETE FROM tipo_reparacion_material WHERE id_tipo_reparacion_material = ?`;
+  connection.query(deleteReparacionMaterial, [id_tipo_reparacion_material], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el trabajo", err });
     return res.json({ tipo_reparacion_material: result });
   });
@@ -421,8 +477,8 @@ app.put("/updateRMT/:id", (req, res) => {
 
 app.delete('/delateRMT/:id',(req,res)=>{
   const id_reparacion_materiales_trabajo = req.params.id;
-  const delateRMT = `DELETE FROM reparacion_materiales_trabajo WHERE id_reparacion_materiales_trabajo = ?`;
-  connection.query(delateRMT, [id_reparacion_materiales_trabajo ], (err, result) => {
+  const deleteRMT = `DELETE FROM reparacion_materiales_trabajo WHERE id_reparacion_materiales_trabajo = ?`;
+  connection.query(deleteRMT, [id_reparacion_materiales_trabajo ], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el RMT", err });
     return res.json({ reparacion_materiales_trabajo: result });
   });

@@ -72,7 +72,7 @@ function vehiculos_mecanico() {
     <>
     <Navbar_mecanico />
       <div className="mt-5 mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
-        <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
+        <table className="w-full table-auto  bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>
@@ -81,7 +81,7 @@ function vehiculos_mecanico() {
               <th className="p-2">Descripción</th>
             </tr>
           </thead>
-          <tbody className="text-center bg-white">
+          <tbody className="text-center overflow-scroll h-16  bg-white">
             {viewVehiculo.map((vehiculo) => (
               <tr key={vehiculo.id_vehiculos}>
                 <td>{vehiculo.id_vehiculos}</td>

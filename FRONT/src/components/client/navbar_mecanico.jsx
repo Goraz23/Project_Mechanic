@@ -4,18 +4,18 @@ import foto from "../../image/perfil.png";
 function navbar() {
   return (
     <>
-      <div className="flex flex-row py-3 h-[65px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
+      <div className="flex flex-row pt-[8px] h-[80px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
       <BotonUno nombre="Dashboard" ruta="/mdash" />
 
         <BotonUno nombre="Trabajos" ruta="/mtrabajos" />
 
+        <BotonUno nombre="Reparaciones" ruta="/mtipo_rm" />
+
         <BotonUno nombre="Control" ruta="/mcontrol_rmt" />
 
-        <BotonUno nombre="En Curso" ruta="/mtipo_rm" />
+        <BotonUno nombre="Recursos" ruta="/mreparaciones" />
 
-        <BotonUno nombre="Tipos Reparaciones" ruta="/mreparaciones" />
-
-        <BotonUno nombre="Materiales" ruta="/mmateriales" />
+        {/* <BotonUno nombre="Materiales" ruta="/mmateriales" /> */}
 
         <BotonUno nombre="Vehículos" ruta="/mvehiculos" />
 
@@ -25,4 +25,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default navbar;   

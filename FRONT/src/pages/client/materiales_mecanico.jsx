@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Navbar_mecanico from "../../components/client/navbar_mecanico";
-function materiales_mecanico() {
+// import Navbar_mecanico from "../../components/client/navbar_mecanico";
+
+function MaterialesMecanico() {
   const [material, setMaterial] = useState({
     material: "",
     precio: 0,
@@ -8,6 +9,7 @@ function materiales_mecanico() {
   });
 
   const [viewMaterial, setViewMaterial] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8082/viewMaterial", {
@@ -21,69 +23,7 @@ function materiales_mecanico() {
         setViewMaterial(materiales.materiales);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, [viewMaterial]);
-
-
-  const deleteMaterial = async (id_materials) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8082/delateMaterial/${id_materials}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id_materials: id_materials,
-          }),
-        }
-      );
-
-      const result = await response.json();
-      console.log(result);
-
-      // Después de eliminar, actualiza la lista de mecánicos
-      if (result.success) {
-        setViewMaterial(
-          viewMaterial.filter(
-            (material) => material.id_materials !== id_materials
-          )
-        );
-      } else {
-        console.error("Error al eliminar material");
-      }
-    } catch (error) {
-      console.error("Error al eliminar material", error);
-    }
-  };
-
-  // const updateMechanic = async (id, updatedMechanic) => {
-  //   try {
-  //       const response = await fetch(`http://localhost:8082/updateMechanic/${id}`, {
-  //           method: "PUT",
-  //           headers: {
-  //               "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify(updatedMechanic),
-  //       });
-
-  //       const result = await response.json();
-  //       console.log(result);
-
-  //       // Después de actualizar, actualiza la lista de mecánicos
-  //       updateMechanicList();
-  //   } catch (error) {
-  //       console.error("Error al actualizar mecánico", error);
-  //   }
-  // };
-
-  // // ...
-
-  // {/* En tu tabla, donde muestras los mecánicos */}
-  // <td onClick={() => {
-  //   const updatedMechanic = prompt("Ingrese la información actualizada del mecánico");
-  //   updateMechanic(mecanico.id_mechanic, updatedMechanic);
-  // }}>Actualizar</td>
+  }, []);
 
   const valueChange = (e, values) => {
     setMaterial({
@@ -92,13 +32,26 @@ function materiales_mecanico() {
     });
   };
 
-  console.log(material);
-  console.log(viewMaterial);
+  const filteredMaterial = viewMaterial.filter((material) =>
+    material.material.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
-    <Navbar_mecanico/>
-      <div className="mt-5 mx-20 overflow-auto h-[250px] border-separate border border-slate-[#185866] bg-[#B2C9CE]  rounded-t-lg items-center">
+      {/* <Navbar_mecanico /> */}
+      <div className="mt-5 mx-auto max-w-lg">
+      <div>
+          <br></br>
+          <h1 className="text-xl font-bold text-gray-800 text-center">Buscar Material</h1>
+          <br></br>
+        </div>
+      <input
+          type="text"
+          placeholder="Buscar material..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="my-3 p-2 w-full rounded-md border border-gray-300"
+        />
         <table className="w-full  table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
@@ -106,16 +59,24 @@ function materiales_mecanico() {
               <th className="p-2">Material</th>
               <th className="p-2">Precio</th>
               <th className="p-2">Cantidad</th>
-              
+              {/* <th className="p-2">Acciones</th> */}
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            {viewMaterial.map((material) => (
+            {filteredMaterial.map((material) => (
               <tr key={material.id_materials}>
                 <td>{material.id_materials}</td>
                 <td>{material.material}</td>
                 <td>{material.precio}</td>
-                <td>{material.Cantidad}</td>
+                <td>{material.cantidad}</td>
+                {/* <td>
+                  <button
+                    onClick={() => deleteMaterial(material.id_materials)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                  >
+                    Eliminar
+                  </button>
+                </td> */}
               </tr>
             ))}
           </tbody>
@@ -125,4 +86,4 @@ function materiales_mecanico() {
   );
 }
 
-export default materiales_mecanico;
+export default MaterialesMecanico;
