@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tupla from '../../components/tupla';
 import Boton_agregar from '../../components/boton_agregar';
 import Navbar_admin from "../../components/admin/navbar_admin";
@@ -175,39 +175,48 @@ function Trabajos_admin() {
             change={(e) => handleInputChange(e, "mechanic_id")}
           />
         </div> */}
-        <select value={selectedMechanic} onChange={(e) =>
-                        handleInputChange(e, 'mechanic_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {viewMechanic.map(mecha=> (
-          <option key={mecha.id_mechanic} value={mecha.id_mechanic}>
-            {mecha.alias}
-          </option>
-        ))}
-      </select>
-        {/* <div className="items-center ">
-          <Tupla
-            tupla="Id_Vehiculo"
-            descripcion="Vehiculo"
-            dato="text"
-            value={trabajo.vehiculos_id}
-            change={(e) => handleInputChange(e, "vehiculos_id")}
+       <div className="items-center p-3">
+          <label className="text-black font-bold " htmlFor="nombre">
+            Mecanico
+          </label>
+          <select
+            value={selectedMechanic}
+            onChange={(e) => handleInputChange(e, "mechanic_id")}
+            className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            {viewMechanic.map((mecha) => (
+              <option key={mecha.id_mechanic} value={mecha.id_mechanic}>
+                {mecha.alias}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="items-center p-3">
+        <label className="text-black font-bold  " htmlFor="nombre">
+            Placa
+          </label>
+          <select
+            value={selectedVehiculos}
+            onChange={(e) => handleInputChange(e, "vehiculos_id")}
+            className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            {viewVehiculo.map((vehiculo) => (
+              <option key={vehiculo.id_vehiculos} value={vehiculo.id_vehiculos}>
+                {vehiculo.placa}
+              </option>
+            ))}
+          </select>
+          <Boton_agregar
+            subir={addTrabajo}
+            agregar="Agregar trabajo del vehículo"
           />
-        </div> */}
-        {/* Boton_agregar component */}
-        <select value={selectedVehiculos} onChange={(e) =>
-                        handleInputChange(e, 'vehiculos_id')} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {viewVehiculo.map(vehiculo=> (
-          <option key={vehiculo.id_vehiculos} value={vehiculo.id_vehiculos}>
-            {vehiculo.placa}
-          </option>
-        ))}
-      </select>
-        <Boton_agregar 
-        subir={addTrabajo} 
-        agregar="Agregar trabajo del vehículo" />
+        </div>
+
+  
       </div>
 
       {/* Table to display trabajos */}
-      <div className="mt-5 overflow-auto h-[250px] mx-20 border-separate border border-slate-[#185866] bg-[#B2C9CE] rounded-t-lg items-center">
+      <div className="mt-5 mx-20 overflow-auto h-60 mb-10 border-separate border border-slate-[#185866] bg-[#B2C9CE] rounded-t-lg items-center">
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
@@ -267,5 +276,3 @@ function Trabajos_admin() {
 
 
 export default Trabajos_admin;
-
-

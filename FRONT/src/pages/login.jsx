@@ -58,7 +58,7 @@ function login() {
 
   return (
     <>
-      <div className="container w-[480px] h-[500px] rounded-xl items-center mt-[7.5%] m-auto my-auto bg-[#b1c9ce]">
+      <div className="container w-[480px] h-[500px] rounded-xl items-center mt-[4.5%] m-auto my-auto bg-[#b1c9ce]">
         <div>
           <img
             src={Logo}
