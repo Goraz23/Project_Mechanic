@@ -5,12 +5,9 @@ import Navbar_admin from "../../components/admin/navbar_admin";
 
 function Trabajos_admin() {
   const [trabajo, setTrabajo] = useState({
-    nombre_trabajo: '',
-    descripcion_trabajo: '',
-    fecha_inicio: '',
-    fecha_final: '',
     mechanic_id: '',
-    vehiculos_id: '',
+    reparacion_vehiculo_id:'',
+    state_id: '',
   });
 
   const [viewMechanic, setViewMechanic] = useState([])
@@ -28,11 +25,40 @@ function Trabajos_admin() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  const [viewVehiculos, setViewVehiculos] = useState([])
+  useEffect(() => {
+    fetch("http://localhost:8082/viewVehiculo", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((vehiculos) => {
+        setViewVehiculos(vehiculos.placa);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  
+  const [viewState, setViewState] = useState([])
+  useEffect(() => {
+    fetch("http://localhost:8082/viewState", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((state) => {
+        setViewState(state.state);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  
+
   const [viewTrabajos, setViewTrabajos] = useState([]);
-  const [selectedMechanic, setSelectedMechanic] = useState([])
-  const [selectedVehiculos, setSelectedVehiculos] = useState([])
   const [refresh, setRefresh ] = useState(true)
-  const [viewVehiculo, setviewVehiculo] = useState([])
   
 
   useEffect(() => {
@@ -46,15 +72,15 @@ function Trabajos_admin() {
   
 
   useEffect(() => {
-    fetch("http://localhost:8082/viewVehiculo", {
+    fetch("http://localhost:8082/viewReparaciones", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
-      .then((vehiculos) => {
-        setviewVehiculo(vehiculos.vehiculos);
+      .then((reparaciones_vehiculos) => {
+        setSelectedVehiculos(reparaciones_vehiculos.reparacion_vehiculo);
       })
       .catch((error) => console.log("Error fetching data:", error));
   }, [refresh]);
@@ -76,12 +102,9 @@ function Trabajos_admin() {
       } else {
         setViewTrabajos([...viewTrabajos, trabajo]);
         setTrabajo({
-          nombre_trabajo: '',
-          descripcion_trabajo: '',
-          fecha_inicio: '',
-          fecha_final: '',
           mechanic_id: '',
-          vehiculos_id: '',
+          reparacion_vehiculo_id:'',
+          state_id:'',
         });
       }
     } catch (error) {
@@ -124,63 +147,19 @@ function Trabajos_admin() {
 
   console.log(viewMechanic)
   console.log(viewTrabajos)
+  console.log(viewState)
 
   return (
     <>
             <Navbar_admin />
       <div className="mt-5 w-[50%] h-full mx-96 bg-[#FFF] items-center">
         {/* Input fields for trabajo */}
-        <div className="items-center ">
-          <Tupla
-            tupla="Nombre del Trabajo"
-            descripcion="Ingresa el trabajo"
-            dato="text"
-            value={trabajo.nombre_trabajo}
-            change={(e) => handleInputChange(e, "nombre_trabajo")}
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Descripción del Trabajo"
-            descripcion="Ingresa los detalles del trabajo"
-            dato="text"
-            value={trabajo.descripcion_trabajo}
-            change={(e) => handleInputChange(e, "descripcion_trabajo")}
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Fecha de inicio"
-            descripcion="Ingresa la fecha de inicio del trabajo"
-            dato="date"
-            value={trabajo.fecha_inicio}
-            change={(e) => handleInputChange(e, "fecha_inicio")}
-          />
-        </div>
-        <div className="items-center ">
-          <Tupla
-            tupla="Fecha de final"
-            descripcion="Ingresa la fecha de final del trabajo"
-            dato="date"
-            value={trabajo.fecha_final}
-            change={(e) => handleInputChange(e, "fecha_final")}
-          />
-        </div>
-        {/* <div className="items-center ">
-          <Tupla
-            tupla="Id_Mecanico"
-            descripcion="Mecanico"
-            dato="text"
-            value={trabajo.mechanic_id}
-            change={(e) => handleInputChange(e, "mechanic_id")}
-          />
-        </div> */}
        <div className="items-center p-3">
           <label className="text-black font-bold " htmlFor="nombre">
             Mecanico
           </label>
           <select
-            value={selectedMechanic}
+            value={viewMechanic}
             onChange={(e) => handleInputChange(e, "mechanic_id")}
             className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
@@ -196,16 +175,32 @@ function Trabajos_admin() {
             Placa
           </label>
           <select
-            value={selectedVehiculos}
+            value={viewVehiculos}
             onChange={(e) => handleInputChange(e, "vehiculos_id")}
             className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            {viewVehiculo.map((vehiculo) => (
+            {viewVehiculos.map((vehiculo) => (
               <option key={vehiculo.id_vehiculos} value={vehiculo.id_vehiculos}>
                 {vehiculo.placa}
               </option>
             ))}
           </select>
+          <div className="items-center p-3">
+          <label className="text-black font-bold " htmlFor="nombre">
+            Mecanico
+          </label>
+          <select
+            value={viewState}
+            onChange={(e) => handleInputChange(e, "state_id")}
+            className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            {viewState.map((state) => (
+              <option key={state.id_state} value={state.id_state}>
+                {state.alias}
+              </option>
+            ))}
+          </select>
+        </div>
           <Boton_agregar
             subir={addTrabajo}
             agregar="Agregar trabajo del vehículo"
@@ -220,26 +215,20 @@ function Trabajos_admin() {
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
-              <th className="p-2">Id_trabajo</th>
-              <th className="p-2">Nombre Trabajo</th>
-              <th className="p-2">Detalles_trabajo</th>
-              <th className="p-2">Fecha_inicio</th>
-              <th className="p-2">Fecha_final</th>
-              <th className="p-2">Mechanic_id</th>
-              <th className="p-2">vehiculos_id</th>
-              <th className="p-2">Acciones</th>
+              <th className="p-2">Id</th>
+              <th className="p-2">Mecancio</th>
+              <th className="p-2">Vehículo</th>
+              <th className="p-2">Status</th>
+              <th className="p-2">Detalles</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
             {viewTrabajos.map(item => (
               <tr key={item.id_trabajo}>
                 <td>{item.id_trabajo}</td>
-                <td>{item.nombre_trabajo}</td>
-                <td>{item.descripcion_trabajo}</td>
-                <td>{item.fecha_inicio}</td>
-                <td>{item.fecha_final}</td>
                 <td>{item.mecanico}</td>
                 <td>{item.vehiculo}</td>
+                <td>{item.state_id}</td>
                 <td className="pt-2">
                   <button
                     type="button"
