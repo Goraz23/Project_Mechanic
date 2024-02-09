@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import Navbar_mecanico from "../../components/client/navbar_mecanico";
+import Navbar_mecanico from "../../components/client/navbar_mecanico";
 
 function MaterialesMecanico() {
   const [material, setMaterial] = useState({
@@ -38,8 +38,8 @@ function MaterialesMecanico() {
 
   return (
     <>
-      {/* <Navbar_mecanico /> */}
-      <div className="mt-5 mx-auto max-w-lg">
+      <Navbar_mecanico /> 
+      <div className="mt-2 mb-2 h-96 overflow-scroll border-b-2 mx-auto max-w-lg">
       <div>
           <br></br>
           <h1 className="text-xl font-bold text-gray-800 text-center">Buscar Material</h1>
@@ -52,7 +52,7 @@ function MaterialesMecanico() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="my-3 p-2 w-full rounded-md border border-gray-300"
         />
-        <table className="w-full  table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
+        <table className="w-full border-x-2 table-auto bg-[#B2C9CE] m-auto  rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>

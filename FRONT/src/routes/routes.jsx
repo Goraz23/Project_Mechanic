@@ -7,7 +7,7 @@ import Mecanicos_admin from "../pages/admin/mecanicos_admin";
 import Vehiculos_admin from "../pages/admin/vehiculos_admin";
 import Reparaciones_admin from "../pages/admin/reparaciones_admin";
 import Dashboard_mecanico from "../pages/client/dashboard_mecanico";
-// import Materiales_mecanico from '../pages/client/materiales_mecanico'
+import Materiales_mecanico from '../pages/client/materiales_mecanico'
 import Reparaciones_mecanico from "../pages/client/reparaciones_mecanico";
 import Tipo_reparacion_material from "../pages/client/tipo_reparacion_material";
 import Title from "../components/title";
@@ -15,7 +15,7 @@ import Trabajos_mecanico from "../pages/client/trabajos_mecanicos";
 import Control_RMT from "../pages/client/control";
 import Vehiculos_mecanico from "../pages/client/vehiculos_mecanico";
 import { RouterPrivate } from "../components/routerPrivate/routerPrivate";
-
+import Vehiculo_detalle from "../pages/client/vehiculo_detalle";
 const isAuth = localStorage.getItem("token")
 const permission = localStorage.getItem("permission")
 
@@ -59,12 +59,12 @@ export const routes = createBrowserRouter([
         <Reparaciones_admin />,
         </RouterPrivate>
       },
-      // {
-      //   path:'/mmateriales',
-      //   element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
-      //   <Materiales_mecanico/>
-      //   </RouterPrivate>
-      // },
+       {
+         path:'/mmateriales',
+         element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
+         <Materiales_mecanico/>
+        </RouterPrivate>
+       },
       {
         path: '/mreparaciones',
         element:  <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
@@ -95,6 +95,10 @@ export const routes = createBrowserRouter([
         element: <RouterPrivate isAuth={isAuth !== null}  permission={ permission == 1 }>
          <Vehiculos_mecanico/>
          </RouterPrivate>
+      },
+      {
+        path: 'mdetalles',
+        element: <Vehiculo_detalle/>
       }
     ],
   },

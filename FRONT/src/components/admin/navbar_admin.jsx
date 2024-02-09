@@ -6,7 +6,7 @@ function navbar_admin() {
   return (
     <>
       
-      <div className="flex flex-row py-3 h-[88px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-11 ">
+      <div className="flex flex-row pt-[10px] h-[60px] w-full px-10 bg-[#B2C9CE] opacity-70 gap-[50px] ">
       <BotonUno nombre="Dashboard" ruta="/adash" />
 
         <BotonUno nombre="Trabajos" ruta="/atrabajos"/>

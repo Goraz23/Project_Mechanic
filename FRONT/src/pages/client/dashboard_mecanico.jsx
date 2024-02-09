@@ -3,9 +3,9 @@ import Card from '../../components/card'
 import { Link } from 'react-router-dom';
 import uno from "../../image/uno.png";
 import logo_dos from "../../image/logo2.png";
-import dos from "../../image/reparaciones.png";
+// import dos from "../../image/reparaciones.png";
 import tres from "../../image/trabajos.png";
-import cuatro from "../../image/autos.png";
+// import cuatro from "../../image/autos.png";
 import cinco from "../../image/materiales.png";
 import ingresos from "../../image/ingresos.png";
 import clientes from "../../image/clientes.png";
@@ -21,15 +21,15 @@ function dashboard_mecanico() {
   return (
     <>
       <div className="relative flex p-0 ">
-        <div className="h-[100%] flex flex-col  fixed items-center px-6 botton-0 left-0 w-[20%] mb-0 top-0 mt-0 bg-[#0F606B] text-[#3B4758] ">
-          <Link to='/mechanic'>
+        <div className="h-[100%] flex flex-col gap-0 fixed items-center px-6 botton-0 left-0 w-[20%] mb-0 top-0 mt-0 bg-[#0F606B] text-[#3B4758] ">
+          <Link to='/mdash'>
           <img
             src={logo_dos}
             className="items-center  pl-5 w-full pb-0 top-0 m-auto"
           />
           </Link>
           
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+          <div className="flex  flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={uno}
               className="items-center h-[100%] pl-5 w-[20%] flex"
@@ -42,7 +42,7 @@ function dashboard_mecanico() {
           </div>
 
 
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+          <div className="flex flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={tres}
               className="items-center h-[100%] pl-5 w-[20%] flex"
@@ -54,19 +54,8 @@ function dashboard_mecanico() {
             </Link>
           </div>
 
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
-            <img
-              src={dos}
-              className="items-center h-[100%] pl-5 w-[17%] flex"
-            />
-            <Link to="/mtipo_rm">
-              <button className="items-center font-normal [font-family:'Roboto-Regular',Helvetica] h-full w-full">
-                Repaciones
-              </button>
-            </Link>
-          </div>
 
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+          {/* <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={cuatro}
               className="items-center h-[100%] pl-5 w-[20%] flex"
@@ -76,9 +65,9 @@ function dashboard_mecanico() {
                Vehículos
               </button>
             </Link>
-          </div>
+          </div> */}
 
-          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+          {/* <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={dos}
               className="items-center h-[100%] pl-5 w-[17%] flex"
@@ -88,9 +77,9 @@ function dashboard_mecanico() {
                 Recursos
               </button>
             </Link>
-          </div>
+          </div> */}
 
-          {/* <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
+          <div className="flex gap-5 flex-row h-10 w-full text-center m-auto py-2 items-center  bg-[#E5F3FF] text-[#185866] rounded-[6px]">
             <img
               src={cinco}
               className="items-center h-[100%] pl-5 w-[20%] flex"
@@ -100,11 +89,12 @@ function dashboard_mecanico() {
                 Materiales
               </button>
             </Link> 
-          </div> */}
+          </div>
           <div className="flex pb-5 flex-col self-center items-center ">
-            <Link to="/">
+
+          <Link to = "/">
             <button
-              className="text-center mx-4 mt-2  rounded-2xl h-[%100] p-1 text-black bg-[#b1c9ce]  w-[100%]"
+              className="text-center px-7  py-2 text-pretty text-xl mt-2  items-center rounded-3xl h-[%100] text-black bg-[#b1c9ce]  w-[100%]"
               type="submit"
               onClick={logout}
             >
