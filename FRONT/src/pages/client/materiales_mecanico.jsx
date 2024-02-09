@@ -5,7 +5,7 @@ function MaterialesMecanico() {
   const [material, setMaterial] = useState({
     material: "",
     precio: 0,
-    cantidad: 0,
+    Cantidad: 0,
   });
 
   const [viewMaterial, setViewMaterial] = useState([]);
@@ -68,7 +68,7 @@ function MaterialesMecanico() {
                 <td>{material.id_materials}</td>
                 <td>{material.material}</td>
                 <td>{material.precio}</td>
-                <td>{material.cantidad}</td>
+                <td>{material.Cantidad}</td>
                 {/* <td>
                   <button
                     onClick={() => deleteMaterial(material.id_materials)}
