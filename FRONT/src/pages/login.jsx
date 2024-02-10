@@ -82,7 +82,9 @@ function login() {
             value={user.pass}
             change={(e) => handleChange(e, "pass")}
           />
-          <div className="flex flex-col self-center items-center">
+          
+        </div>
+        <div className="flex flex-col self-center items-center">
             {error && <div className="text-red-600">{error}</div>}
             <button
               className="text-center font-bold mx-4 mt-2 text-white rounded-2xl h-[%100] p-1 bg-[#185866] w-96"
@@ -91,10 +93,11 @@ function login() {
             >
               Iniciar sesión
             </button>
+
           </div>
-        </div>
       </div>
     </>
+
   );
 }
 

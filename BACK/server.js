@@ -26,14 +26,7 @@ app.listen(8082, () => {
   console.log("ESCUCHANDO EN EL PUERTO 8082");
 });
 
-//!API STATE
-app.get("/viewState", (req, res) => {
-  const viewState = `SELECT * FROM state`;
-  connection.query(viewState, (err, result) => {
-    if (err) return res.json({ error: "error al ver los status", err });
-    return res.json({ mecanicos: result });
-  });
-});
+
 
 
 // ! API PARA EL LOGIN 
@@ -58,7 +51,7 @@ app.post('/login', (req, res) => {
 });
 
 
-// ! APIS PARA MECANICOS *********!!
+// ! APIS PARA MECANICOS 
 
 //GET ALL MECHANICS
 app.post("/addMechanic", (req, res) => {
@@ -79,8 +72,6 @@ app.post("/addMechanic", (req, res) => {
     }
   );
 });
-
-
 
 app.get("/getUsers/id", (req, res) => {
   const id_mechanic = req.body.id;
@@ -145,6 +136,15 @@ app.put("/updateMechanic/:id", (req, res) => {
           return res.json({ mechanic: result });
       }
   );
+});
+
+//!API STATE
+app.get("/viewState", (req, res) => {
+  const viewState = `SELECT * FROM state`;
+  connection.query(viewState, (err, result) => {
+    if (err) return res.json({ error: "error al ver los status", err });
+    return res.json({ mecanicos: result });
+  });
 });
 
 // ! APIS PARA LOS  MATERIAES
