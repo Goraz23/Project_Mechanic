@@ -6,36 +6,29 @@ import EditarReparaciones from "../../components/mod/editar_reparaciones";
 
 function reparaciones_admin() {
   const [tipoReparacion, setTipoReparacion] = useState({
-    nombre_tipo_reparacion: "",
-    detalles_tipo_reparacion: "",
-    precio_tipo_reparacion: 0,
+    reparacion: "",
+    detalles: "",
+    precio_reparacion: 0,
   });
-
-
 
   const [viewReparacion, setViewReparacion] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [selectedTipoReparacionId, setSelectedTipoReparacionId] =
-    useState(null); // Estado para almacenar el ID del mecánico seleccionado para editar
-  const [showEditModal, setShowEditModal] = useState(false); // Estado para controlar si se debe mostrar el componente de edición
+    useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8082/viewTipoReparacion", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch("http://localhost:8082/viewReparacion")
       .then((response) => response.json())
-      .then((tipo_reparacion) => {
-        setViewReparacion(tipo_reparacion.tipo_reparacion);
+      .then((reparaciones) => {
+        setViewReparacion(reparaciones.reparaciones);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [refresh]);
 
   const AddReparacion = async (e) => {
     try {
-      const response = await fetch("http://localhost:8082/addTipoReparacion", {
+      const response = await fetch("http://localhost:8082/addReparacion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,74 +41,63 @@ function reparaciones_admin() {
 
       setRefresh(!refresh);
       setTipoReparacion({
-        nombre_tipo_reparacion: "",
-        detalles_tipo_reparacion: "",
-        precio_tipo_reparacion: 0,
+        reparacion: "",
+        detalles: "",
+        precio_reparacion: 0,
       });
 
-      if (result.success) {
+      if (result.reparaciones) {
         setViewReparacion([...viewReparacion, tipoReparacion]);
       } else {
-        console.error("Error al registrar material");
+        console.error("Error al registrar reparación");
       }
     } catch (error) {
       console.error("Error al registrar", error);
     }
   };
 
-  const deleteReparacion = async (id_tipo_reparacion) => {
+  const deleteReparacion = async (id_reparacion) => {
     try {
-      const response = await fetch(
-        `http://localhost:8082/deleteTipoReparacion/${id_tipo_reparacion}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id_tipo_reparacion: id_tipo_reparacion,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:8082/deleteReparacion/${id_reparacion}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const result = await response.json();
       console.log(result);
 
-      // Después de eliminar, actualiza la lista de mecánicos
-      if (result.success) {
+      if (result.reparaciones) {
         setViewReparacion(
           viewReparacion.filter(
-            (tipoReparacion) =>
-              tipoReparacion.id_tipo_reparacion !== id_tipo_reparacion
+            (reparacion) => reparacion.id_reparacion !== id_reparacion
           )
         );
       } else {
-        console.error("Eliminado correctamente");
+        console.error("Error al eliminar reparación");
       }
     } catch (error) {
-      console.error("Error al eliminar material", error);
+      console.error("Error al eliminar", error);
     }
   };
 
   const handleEditClick = (id) => {
     setSelectedTipoReparacionId(id);
-
     setShowEditModal(true);
   };
+
   const handleCloseEditModal = () => {
     setShowEditModal(false);
-    setSelectedTipoReparacionId(null); // Restablecer el ID del mecánico seleccionado
+    setSelectedTipoReparacionId(null);
   };
 
-  const valueChange = (e, values) => {
+  const valueChange = (e, field) => {
     setTipoReparacion({
       ...tipoReparacion,
-      [values]: e.target.value,
+      [field]: e.target.value,
     });
   };
-
-  console.log(setTipoReparacion);
-  console.log(viewReparacion);
 
   return (
     <>
@@ -132,8 +114,8 @@ function reparaciones_admin() {
           <Tupla
             tupla="Tipo de reparación"
             dato="text"
-            value={tipoReparacion.nombre_tipo_reparacion}
-            change={(e) => valueChange(e, "nombre_tipo_reparacion")}
+            value={tipoReparacion.reparacion}
+            change={(e) => valueChange(e, "reparacion")}
             descripcion="Ingresa la reparación que complementará el trabajo"
           />
         </div>
@@ -141,17 +123,17 @@ function reparaciones_admin() {
           <Tupla
             tupla="Descripción"
             dato="text"
-            value={tipoReparacion.detalles_tipo_reparacion}
-            change={(e) => valueChange(e, "detalles_tipo_reparacion")}
-            descripcion="Ingresa que se hará en esta reparación"
+            value={tipoReparacion.detalles}
+            change={(e) => valueChange(e, "detalles")}
+            descripcion="Ingresa qué se hará en esta reparación"
           />
         </div>
         <div className="items-center ">
           <Tupla
             tupla="Precio"
             dato="number"
-            value={tipoReparacion.precio_tipo_reparacion}
-            change={(e) => valueChange(e, "precio_tipo_reparacion")}
+            value={tipoReparacion.precio_reparacion}
+            change={(e) => valueChange(e, "precio_reparacion")}
             descripcion="Ingresa el precio de la reparación asignada"
           />
         </div>
@@ -172,18 +154,16 @@ function reparaciones_admin() {
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            {viewReparacion.map((tipoReparacion) => (
-              <tr key={tipoReparacion.id_tipo_reparacion}>
-                <td>{tipoReparacion.id_tipo_reparacion}</td>
-                <td>{tipoReparacion.nombre_tipo_reparacion}</td>
-                <td>{tipoReparacion.detalles_tipo_reparacion}</td>
-                <td>{tipoReparacion.precio_tipo_reparacion}</td>
+            {viewReparacion.map((reparacion) => (
+              <tr key={reparacion.id_reparacion}>
+                <td>{reparacion.id_reparacion}</td>
+                <td>{reparacion.reparacion}</td>
+                <td>{reparacion.detalles}</td>
+                <td>{reparacion.precio_reparacion}</td>
                 <td className="pt-2">
                   <button
                     type="button"
-                    onClick={() =>
-                      deleteReparacion(tipoReparacion.id_tipo_reparacion)
-                    }
+                    onClick={() => deleteReparacion(reparacion.id_reparacion)}
                     className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                   >
                     <box-icon
@@ -195,9 +175,7 @@ function reparaciones_admin() {
                   </button>
                   <button
                     type="button"
-                    onClick={() =>
-                      handleEditClick(tipoReparacion.id_tipo_reparacion)
-                    } // Llama a la función handleEditClick con el ID del mecánico
+                    onClick={() => handleEditClick(reparacion.id_reparacion)}
                     className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
                   >
                     <box-icon
