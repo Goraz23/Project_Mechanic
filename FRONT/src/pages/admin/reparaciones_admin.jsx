@@ -5,75 +5,74 @@ import Navbar_admin from "../../components/admin/navbar_admin";
 import EditarReparaciones from "../../components/mod/editar_reparaciones";
 
 function reparaciones_admin() {
-  const [tipoReparacion, setTipoReparacion] = useState({
-    nombre_tipo_reparacion: "",
-    detalles_tipo_reparacion: "",
+  const [reparaciones, setReparaciones] = useState({
+    reparacion: "",
+    detalles: "",
     precio_tipo_reparacion: 0,
   });
 
 
 
-  const [viewReparacion, setViewReparacion] = useState([]);
+  const [viewReparaciones, setViewReparaciones] = useState([]);
   const [refresh, setRefresh] = useState(true);
-  const [selectedTipoReparacionId, setSelectedTipoReparacionId] =
-    useState(null); // Estado para almacenar el ID del mecánico seleccionado para editar
+  const [selectedReparacionId, setSelectedReparacionId] = useState(null); // Estado para almacenar el ID del mecánico seleccionado para editar
   const [showEditModal, setShowEditModal] = useState(false); // Estado para controlar si se debe mostrar el componente de edición
 
   useEffect(() => {
-    fetch("http://localhost:8082/viewTipoReparacion", {
+    fetch("http://localhost:8082/viewReparacion", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
-      .then((tipo_reparacion) => {
-        setViewReparacion(tipo_reparacion.tipo_reparacion);
+      .then((reparaciones) => {
+        setViewReparaciones(reparaciones.reparaciones);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [refresh]);
 
-  const AddReparacion = async (e) => {
+  const AddReparacion = async () => {
     try {
-      const response = await fetch("http://localhost:8082/addTipoReparacion", {
+      const response = await fetch("http://localhost:8082/addReparacion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(tipoReparacion),
+        body: JSON.stringify(reparacion),
       });
 
       const result = await response.json();
       console.log(result);
 
       setRefresh(!refresh);
-      setTipoReparacion({
-        nombre_tipo_reparacion: "",
-        detalles_tipo_reparacion: "",
-        precio_tipo_reparacion: 0,
+      setReparacion({
+        reparacion: "",
+        detalles: "",
+        precio_reparacion: 0,
       });
 
       if (result.success) {
-        setViewReparacion([...viewReparacion, tipoReparacion]);
+        setViewReparaciones([...viewReparaciones, reparacion]);
       } else {
-        console.error("Error al registrar material");
+        console.error("Error al registrar la reparacion");
       }
     } catch (error) {
-      console.error("Error al registrar", error);
+      console.error("Error al registrar la reparacion", error);
     }
   };
 
-  const deleteReparacion = async (id_tipo_reparacion) => {
+  const deleteReparacion = async (id_reparacion) => {
     try {
       const response = await fetch(
-        `http://localhost:8082/deleteTipoReparacion/${id_tipo_reparacion}`,
+        `http://localhost:8082/deleteReparacion/${id_reparacion}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id_tipo_reparacion: id_tipo_reparacion,
+            id_reparacion: id_reparacion,
           }),
         }
       );
@@ -83,39 +82,39 @@ function reparaciones_admin() {
 
       // Después de eliminar, actualiza la lista de mecánicos
       if (result.success) {
-        setViewReparacion(
-          viewReparacion.filter(
-            (tipoReparacion) =>
-              tipoReparacion.id_tipo_reparacion !== id_tipo_reparacion
+        setViewReparaciones(
+          viewReparaciones.filter(
+            (reparaciones) =>
+              reparaciones.id_reparacion !== id_reparacion
           )
         );
       } else {
         console.error("Eliminado correctamente");
       }
     } catch (error) {
-      console.error("Error al eliminar material", error);
+      console.error("Error al eliminar la reparacion", error);
     }
   };
 
   const handleEditClick = (id) => {
-    setSelectedTipoReparacionId(id);
+    setSelectedReparacionId(id);
 
     setShowEditModal(true);
   };
   const handleCloseEditModal = () => {
     setShowEditModal(false);
-    setSelectedTipoReparacionId(null); // Restablecer el ID del mecánico seleccionado
+    setSelectedReparacionId(null); // Restablecer el ID del mecánico seleccionado
   };
 
   const valueChange = (e, values) => {
-    setTipoReparacion({
-      ...tipoReparacion,
+    setReparacion({
+      ...reparacion,
       [values]: e.target.value,
     });
   };
 
-  console.log(setTipoReparacion);
-  console.log(viewReparacion);
+  console.log(setReparacion);
+  console.log(viewReparaciones);
 
   return (
     <>
@@ -123,17 +122,17 @@ function reparaciones_admin() {
       {showEditModal && (
         <EditarReparaciones
           onClose={handleCloseEditModal}
-          selectedTipoReparacionId={selectedTipoReparacionId}
+          selectedReparacionId={selectedReparacionId}
         />
       )}
 
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
-            tupla="Tipo de reparación"
+            tupla=" de reparación"
             dato="text"
-            value={tipoReparacion.nombre_tipo_reparacion}
-            change={(e) => valueChange(e, "nombre_tipo_reparacion")}
+            value={reparacion.reparacion}
+            change={(e) => valueChange(e, "reparacion")}
             descripcion="Ingresa la reparación que complementará el trabajo"
           />
         </div>
@@ -141,8 +140,8 @@ function reparaciones_admin() {
           <Tupla
             tupla="Descripción"
             dato="text"
-            value={tipoReparacion.detalles_tipo_reparacion}
-            change={(e) => valueChange(e, "detalles_tipo_reparacion")}
+            value={reparacion.detalles}
+            change={(e) => valueChange(e, "detalles")}
             descripcion="Ingresa que se hará en esta reparación"
           />
         </div>
@@ -150,7 +149,7 @@ function reparaciones_admin() {
           <Tupla
             tupla="Precio"
             dato="number"
-            value={tipoReparacion.precio_tipo_reparacion}
+            value={reparacion.precio_tipo_reparacion}
             change={(e) => valueChange(e, "precio_tipo_reparacion")}
             descripcion="Ingresa el precio de la reparación asignada"
           />
@@ -165,24 +164,24 @@ function reparaciones_admin() {
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>
-              <th className="p-2">Tipo de reparación</th>
+              <th className="p-2"> de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
               <th className="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="text-center bg-white">
-            {viewReparacion.map((tipoReparacion) => (
-              <tr key={tipoReparacion.id_tipo_reparacion}>
-                <td>{tipoReparacion.id_tipo_reparacion}</td>
-                <td>{tipoReparacion.nombre_tipo_reparacion}</td>
-                <td>{tipoReparacion.detalles_tipo_reparacion}</td>
-                <td>{tipoReparacion.precio_tipo_reparacion}</td>
+            {viewReparaciones.map((reparacion) => (
+              <tr key={reparacion.id_reparacion}>
+                <td>{reparacion.id_reparacion}</td>
+                <td>{reparacion.reparacion}</td>
+                <td>{reparacion.detalles}</td>
+                <td>{reparacion.precio_tipo_reparacion}</td>
                 <td className="pt-2">
                   <button
                     type="button"
                     onClick={() =>
-                      deleteReparacion(tipoReparacion.id_tipo_reparacion)
+                      deleteReparacion(reparacion.id_reparacion)
                     }
                     className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                   >
@@ -196,7 +195,7 @@ function reparaciones_admin() {
                   <button
                     type="button"
                     onClick={() =>
-                      handleEditClick(tipoReparacion.id_tipo_reparacion)
+                      handleEditClick(reparacion.id_reparacion)
                     } // Llama a la función handleEditClick con el ID del mecánico
                     className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
                   >
