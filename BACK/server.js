@@ -559,12 +559,12 @@ app.delete('/deleteTrabajos/:id',(req,res)=>{
 
 //! API REPARACION VEHÍCULO ()
 
-app.post("/addTrabajo", (req, res) => {
-  const reparacion = req.params.reparacion_id;
-  const costo_total = req.body.costo_total;
+app.post("/addRepairVehiculos", (req, res) => {
+  const reparacion = req.body.reparacion_id;
   
-  const addTrabajo = `INSERT INTO reparaciones_vehiculo (reparacion_id, costo_total,) VALUES(?, ?)`;
-  connection.query(addTrabajo, [reparacion, costo_total], (err, result) => {
+  
+  const addTrabajo = `INSERT INTO reparaciones_vehiculo (reparacion_id) VALUES(?)`;
+  connection.query(addTrabajo, [reparacion], (err, result) => {
     if (err) return res.json({ error : "error al agregar trabajo", err });
     return res.json({ trabajo : result });
   });
