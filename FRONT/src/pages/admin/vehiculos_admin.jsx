@@ -64,7 +64,7 @@ function Vehiculos_admin() {
   const delateVehiculo = async (id_vehiculos) => {
     try {
       const response = await fetch(
-        `http://localhost:8082/delateVehiculo/${id_vehiculos}`,
+        `http://localhost:8082/deleteVehiculo/${id_vehiculos}`,
         {
           method: "DELETE",
           headers: {
@@ -87,7 +87,7 @@ function Vehiculos_admin() {
           )
         );
       } else {
-        alert("El vehículo no fue encontrado");
+        alert("El vehículo no fue eliminado");
         console.error("Error al eliminar vehiculo");
       }
     } catch (error) {
