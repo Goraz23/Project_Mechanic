@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
+import { Link } from "react-router-dom";
 
 function Trabajos_mecanico() {
   const [trabajo, setTrabajo] = useState({
@@ -181,16 +182,18 @@ function Trabajos_mecanico() {
                       className="items-center"
                     ></box-icon>
                   </button>
-                  <button
-                    type="button"
-                    className="text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-blue-900"
-                  >
-                    <box-icon
-                      name="info-circle"
-                      type="solid"
-                      color="#ffffff"
-                    ></box-icon>
-                  </button>
+                  <Link to={'/mdetalles'}>
+                      <button
+                        type="button"
+                        className="text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-blue-900"
+                      >
+                        <box-icon
+                          name="info-circle"
+                          type="solid"
+                          color="#ffffff"
+                        ></box-icon>
+                      </button>
+                  </Link>
                 </td>
               </tr>
             ))}
