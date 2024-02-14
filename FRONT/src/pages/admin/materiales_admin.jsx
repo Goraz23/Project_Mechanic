@@ -36,7 +36,19 @@ function materiales_admin() {
   const AddMaterial = async (e) => {
     e.preventDefault();
     try {
-      console.log(material);
+      // Validar campos en blanco
+      if (!material.material.trim() || material.precio === 0 || material.cantidad === 0) {
+        alert("Por favor, completa todos los campos antes de agregar un nuevo material.");
+        return;
+      }
+
+      // Validar caracteres especiales
+      const regex = /^[a-zA-Z0-9\s]*$/;
+      if (!regex.test(material.material)) {
+        alert("Por favor, ingresa solo caracteres alfanuméricos y espacios en el nombre del material.");
+        return;
+      }
+
       const response = await fetch("http://localhost:8082/addMaterial", {
         method: "POST",
         headers: {
@@ -48,7 +60,7 @@ function materiales_admin() {
       const result = await response.json();
       console.log(result);
 
-      setRefresh(!refresh)
+      setRefresh(!refresh);
       setMaterial({
         material: "",
         precio: 0,
