@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
-import { Link } from "react-router-dom";
+
 function Trabajos_mecanico() {
   const [trabajo, setTrabajo] = useState({
-    nombre_trabajo: "",
-    descripcion_trabajo: "",
-    fecha_inicio: "",
-    fecha_final: "",
     mechanic_id: "",
     vehiculos_id: "",
+    state_id: "",
   });
 
   const [viewTrabajos, setViewTrabajos] = useState([]);
@@ -39,12 +36,9 @@ function Trabajos_mecanico() {
       } else {
         setViewTrabajos([...viewTrabajos, trabajo]);
         setTrabajo({
-          nombre_trabajo: "",
-          descripcion_trabajo: "",
-          fecha_inicio: "",
-          fecha_final: "",
           mechanic_id: "",
           vehiculos_id: "",
+          state_id: "",
         });
         window.location.reload(); // Recargar la página
       }
@@ -148,15 +142,6 @@ function Trabajos_mecanico() {
           subir={addTrabajo}
           agregar="Agregar trabajo del vehículo"
         />
-        <button
-          type="button"
-          // onClick={() => deleteTrabajo(item.id_trabajo)}
-          className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-        >
-          <Link to="/mdetalles">
-            <box-icon type='solid' name='detail'></box-icon>
-          </Link>
-        </button>
       </div>
 
       {/* Table to display trabajos */}
