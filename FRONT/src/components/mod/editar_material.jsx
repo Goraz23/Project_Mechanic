@@ -11,21 +11,21 @@ function EditarMaterial({ onClose, selectedMaterialId }) {
       const materialData = response.data;
       console.log("material", materialData.materiales[0].material)
       console.log("precio", materialData.materiales[0].precio)
-      console.log("cantidad", materialData.materiales[0].Cantidad)
+      console.log("cantidad", materialData.materiales[0])
       setMaterial(materialData.materiales[0].material);
       setPrecio(materialData.materiales[0].precio);
       setCantidad(materialData.materiales[0].Cantidad);
   
       // Verifica si los valores no son undefined antes de asignarlos
-      if (materialData.material !== undefined) {
-        setMaterial(materialData.material);
-      }
-      if (materialData.precio !== undefined) {
-        setPrecio(materialData.precio);
-      }
-      if (materialData.cantidad !== undefined) {
-        setCantidad(materialData.cantidad);
-      }
+      // if (materialData.material !== undefined) {
+      //   setMaterial(materialData.material);
+      // }
+      // if (materialData.precio !== undefined) {
+      //   setPrecio(materialData.precio);
+      // }
+      // if (materialData.Cantidad !== undefined) {
+      //   setCantidad(materialData.Cantidad);
+      // }
     } catch (error) {
       console.error("Error al ver los materiales:", error);
     }
@@ -38,6 +38,12 @@ function EditarMaterial({ onClose, selectedMaterialId }) {
   }, [selectedMaterialId]);
 
   const actualizarMaterial = async () => {
+
+    if(material.trim() === '' || precio.trim() === '' || cantidad.trim() === ''){
+      alert('no pongas cosas vacias')
+      return
+    }
+
     try {
       const response = await axios.put(
         `http://localhost:8082/updateMaterial/${selectedMaterialId}`,

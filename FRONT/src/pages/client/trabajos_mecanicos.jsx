@@ -106,6 +106,8 @@ function Trabajos_mecanico() {
     });
   };
 
+  console.log(trabajo)
+
   return (
     <>
             <Navbar_mecanico />

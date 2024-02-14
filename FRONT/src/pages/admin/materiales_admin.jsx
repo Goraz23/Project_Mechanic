@@ -1,4 +1,3 @@
-//subo este comentario para que esta cosa no lo ponga como si no hubiera hecho nada :/
 import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
@@ -7,6 +6,7 @@ import EditarMaterial from "../../components/mod/editar_material";
 
 
 function materiales_admin() {
+  
   const [material, setMaterial] = useState({
     material: "",
     precio: 0,
@@ -33,10 +33,10 @@ function materiales_admin() {
       .catch((error) => console.error("Error fetching data:", error));
   }, [refresh]);
 
-
-
   const AddMaterial = async (e) => {
+    e.preventDefault();
     try {
+      console.log(material);
       const response = await fetch("http://localhost:8082/addMaterial", {
         method: "POST",
         headers: {
@@ -108,6 +108,34 @@ const handleCloseEditModal = () => {
   setSelectedMaterialId(null); // Restablecer el ID del mecánico seleccionado
 };
 
+  // const updateMechanic = async (id, updatedMechanic) => {
+  //   try {
+  //       const response = await fetch(http://localhost:8082/updateMechanic/${id}, {
+  //           method: "PUT",
+  //           headers: {
+  //               "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify(updatedMechanic),
+  //       });
+
+  //       const result = await response.json();
+  //       console.log(result);
+
+  //       // Después de actualizar, actualiza la lista de mecánicos
+  //       updateMechanicList();
+  //   } catch (error) {
+  //       console.error("Error al actualizar mecánico", error);
+  //   }
+  // };
+
+  // // ...
+
+  // {/* En tu tabla, donde muestras los mecánicos */}
+  // <td onClick={() => {
+  //   const updatedMechanic = prompt("Ingrese la información actualizada del mecánico");
+  //   updateMechanic(mecanico.id_mechanic, updatedMechanic);
+  // }}>Actualizar</td>
+
   const valueChange = (e, values) => {
     setMaterial({
       ...material,
@@ -115,8 +143,8 @@ const handleCloseEditModal = () => {
     });
   };
 
-  console.log(material);
-  console.log(viewMaterial);
+  
+  console.log(viewMaterial, 'hiiiiii');
 
   return (
     <>
