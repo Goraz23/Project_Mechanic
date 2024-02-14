@@ -34,6 +34,19 @@ function mecanicos_admin() {
 
   const AddMechanic = async (e) => {
     try {
+      // Verificar si algún campo está en blanco
+      if (!mechanic.alias.trim() || !mechanic.surname.trim() || !mechanic.email.trim() || !mechanic.pass.trim()) {
+        alert("Por favor, completa todos los campos antes de agregar un nuevo mecánico.");
+        return;
+      }
+  
+      // Verificar si algún campo contiene caracteres especiales
+      const regex = /^[a-zA-Z0-9\s]*$/;
+      if (!regex.test(mechanic.alias) || !regex.test(mechanic.surname) || !regex.test(mechanic.email) || !regex.test(mechanic.pass)) {
+        alert("Por favor, ingresa solo caracteres alfanuméricos y espacios en los campos.");
+        return;
+      }
+  
       const response = await fetch("http://localhost:8082/addMechanic", {
         method: "POST",
         headers: {
@@ -41,10 +54,10 @@ function mecanicos_admin() {
         },
         body: JSON.stringify(mechanic),
       });
-
+  
       const result = await response.json();
       console.log(result);
-
+  
       setRefresh(!refresh);
       setMechanic({
         alias: "",
@@ -53,7 +66,7 @@ function mecanicos_admin() {
         pass: "",
         rol_id: 1,
       });
-
+  
       if (result.success) {
         setViewMechanic([...viewMechanic, mechanic]);
       } else {
@@ -63,7 +76,7 @@ function mecanicos_admin() {
       console.error("Error al registrar", error);
     }
   };
-
+  
   const deleteMechanic = async (id_mechanic) => {
     try {
       const response = await fetch(

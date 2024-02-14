@@ -28,6 +28,19 @@ function reparaciones_admin() {
 
   const AddReparacion = async (e) => {
     try {
+      // Validar campos en blanco
+      if (!tipoReparacion.reparacion.trim() || !tipoReparacion.detalles.trim()) {
+        alert("Por favor, completa todos los campos antes de agregar una nueva reparación.");
+        return;
+      }
+
+      // Validar caracteres especiales
+      const regex = /^[a-zA-Z0-9\s]*$/;
+      if (!regex.test(tipoReparacion.reparacion) || !regex.test(tipoReparacion.detalles)) {
+        alert("Por favor, ingresa solo caracteres alfanuméricos y espacios en los campos.");
+        return;
+      }
+
       const response = await fetch("http://localhost:8082/addReparacion", {
         method: "POST",
         headers: {

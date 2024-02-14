@@ -33,6 +33,19 @@ function Vehiculos_admin() {
 
   const addVehiculo = async (e) => {
     try {
+      // Verifica si los campos están en blanco
+      if (vehiculos.placa.trim() === "" || vehiculos.modelo.trim() === "" || vehiculos.descripcion.trim() === "") {
+        alert("Por favor, completa todos los campos antes de agregar un nuevo vehículo.");
+        return; // Detiene la función si algún campo está en blanco
+      }
+  
+      // Verifica si hay caracteres especiales en la placa, modelo y descripción
+      const regex = /^[a-zA-Z0-9\s]*$/; // Expresión regular para permitir solo letras, números y espacios
+      if (!regex.test(vehiculos.placa) || !regex.test(vehiculos.modelo) || !regex.test(vehiculos.descripcion)) {
+        alert("Por favor, ingresa solo caracteres alfanuméricos y espacios en la placa, modelo y descripción.");
+        return; // Detiene la función si hay caracteres especiales
+      }
+  
       const response = await fetch("http://localhost:8082/addVehiculo", {
         method: "POST",
         headers: {
@@ -40,17 +53,17 @@ function Vehiculos_admin() {
         },
         body: JSON.stringify(vehiculos),
       });
-
+  
       const result = await response.json();
       console.log(result);
-
+  
       setRefresh(!refresh);
       setVehiculos({
         placa: "",
         modelo: "",
         descripcion: "",
       });
-
+  
       if (result.success) {
         setviewVehiculo([...viewVehiculo, vehiculos]);
       } else {
