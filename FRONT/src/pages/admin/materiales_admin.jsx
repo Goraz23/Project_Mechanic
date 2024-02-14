@@ -1,3 +1,4 @@
+//subo este comentario para que esta cosa no lo ponga como si no hubiera hecho nada :/
 import { useState, useEffect } from "react";
 import Tupla from "../../components/tupla";
 import Boton_agregar from "../../components/boton_agregar";
