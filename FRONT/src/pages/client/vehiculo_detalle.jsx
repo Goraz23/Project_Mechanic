@@ -124,7 +124,7 @@ function vehiculo_detalle() {
   const deleteTrabajo = async (id_reparacion_vehiculo) => {
     try {
       const response = await fetch(
-        `http://localhost:8082/deleteTrabajos/${id_reparacion_vehiculo}`,
+        `http://localhost:8082/deleteRV/${id_reparacion_vehiculo}`,
         {
           method: 'DELETE',
           headers: {
