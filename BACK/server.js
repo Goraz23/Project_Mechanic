@@ -453,19 +453,19 @@ app.delete('/deleteReparacion/:id',(req,res)=>{
 
 app.post("/addTrabajo", (req, res) => {
   const mechanic_id = req.body.mechanic_id;
-  const reparacion_vehiculo_id = req.body.reparacion_vehiculo_id;
+  const vehiculos_id = req.body.vehiculos_id;
   const state_id = req.body.state_id;
 
-  const addTrabajo = "INSERT INTO trabajos (mechanic_id, reparacion_vehiculo_id, state_id) VALUES ( ?, ?, ?);";
+  const addTrabajo = "INSERT INTO trabajos (mechanic_id, vehiculos_id, state_id) VALUES ( ?, ?, ?);";
 
-  connection.query(addTrabajo, [mechanic_id, reparacion_vehiculo_id, state_id], (err, result) => {
+  connection.query(addTrabajo, [mechanic_id, vehiculos_id, state_id], (err, result) => {
     if (err) return res.json({ error : "error al agregar trabajo", err });
     return res.json({ trabajo : result });
   });
 });
 
 app.get("/viewTrabajos", (req, res) => {
-  const viewTrabajos = "SELECT * FROM trabajos;";
+  const viewTrabajos = "CALL ObtenerTrabajos ();";
   connection.query(viewTrabajos, (err, result) => {
     if (err) return res.json({ error: "error al ver los trabajos", err });
     return res.json({ trabajo: result });
@@ -474,15 +474,15 @@ app.get("/viewTrabajos", (req, res) => {
 
 app.put("/updateTrabajos/:id", (req, res) => {
   const mechanic_id = req.body.mechanic_id; 
-  const reparacion_vehiculo_id = req.body.reparacion_vehiculo_id; 
+  const vehiculos_id = req.body.vehiculos_id; 
   const state_id = req.body.state_id;
-  const id_trabajo = req.params.id;
+  const id_trabajos = req.params.id;
 
-  const updateTrabajo = "UPDATE trabajos SET mechanic_id = ?, reparacion_vehiculo_id = ?, state_id = ? WHERE id_trabajo  = ?";
+  const updateTrabajo = "UPDATE trabajos SET mechanic_id = ?, vehiculos_id = ?, state_id = ? WHERE id_trabajos  = ?";
 
   connection.query(
       updateTrabajo,
-      [mechanic_id, reparacion_vehiculo_id, id_trabajo, state_id],
+      [mechanic_id, vehiculos_id, id_trabajos, state_id],
       (err, result) => {
           if (err) return res.status(500).json({ error: "Error al editar el tipo de reparacion", err });
           return res.json({ trabajo: result });
@@ -492,9 +492,9 @@ app.put("/updateTrabajos/:id", (req, res) => {
 
 
 app.delete('/deleteTrabajos/:id',(req,res)=>{
-  const id_trabajo = req.params.id;
-  const deleteTrabajos = `DELETE FROM trabajos WHERE id_trabajo = ?`;
-  connection.query(deleteTrabajos, [id_trabajo], (err, result) => {
+  const id_trabajos = req.params.id;
+  const deleteTrabajos = `DELETE FROM trabajos WHERE id_trabajos = ?`;
+  connection.query(deleteTrabajos, [id_trabajos], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el trabajo", err });
     return res.json({ trabajo: result });
   });
