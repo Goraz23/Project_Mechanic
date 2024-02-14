@@ -644,11 +644,11 @@ app.get("/viewReparaciones", (req, res) => {
 //! API VEHICULO MATERIAL (VM)
 
 app.post("/addVM", (req, res) => {
-  const costo_material = req.params.costo_material;
-  const material_id = req.body.material_id;
+  const costo_material = req.body.costo_material;
+  const material_id = req.body.materials_id;
   const vehiculos_id = req.body.vehiculos_id;
   
-  const addVM = `INSERT INTO vehiculo_material (costo_material, material_id, vehiculos) VALUES(?, ?,?)`;
+  const addVM = `INSERT INTO vehiculo_material (costo_material, materials_id, vehiculos_id) VALUES(?, ?,?)`;
   connection.query(addVM, [costo_material, material_id, vehiculos_id], (err, result) => {
     if (err) return res.json({ error : "error al agregar trabajo", err });
     return res.json({ vehiculo_material : result });
@@ -656,7 +656,7 @@ app.post("/addVM", (req, res) => {
 });
 
 app.get("/viewVM", (req, res) => {
-  const viewVM = "SELECT * FROM vehiculo_material;";
+  const viewVM = "CALL ObtenerVehiculosMateriales();";
   connection.query(viewVM, (err, result) => {
     if (err) return res.json({ error: "error al ver los vehículos", err });
     return res.json({ vehiculo_material: result });
@@ -678,7 +678,7 @@ connection.query(getVM, [id_vehiculo_material], (err, result) => {
 app.delete('/deleteVM/:id',(req,res)=>{
   const id_vehiculo_material = req.params.id;
   const deleteVM= `DELETE FROM vehiculo_material WHERE id_vehiculo_material = ?`;
-  connection.query(deleteTrabajos, [id_vehiculo_material], (err, result) => {
+  connection.query(deleteVM, [id_vehiculo_material], (err, result) => {
     if (err) return res.json({ error: "error al eliminar el vehiculo_material", err });
     return res.json({ vehiculo_material: result });
   });
