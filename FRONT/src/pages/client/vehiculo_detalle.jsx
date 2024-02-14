@@ -1,6 +1,8 @@
 import Navbar_mecanico from "../../components/client/navbar_mecanico";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Boton_agregar from "../../components/boton_agregar";
+
 function vehiculo_detalle() {
   const [selectedReparacion, setSelectedReparacion] = useState(0);
   const [viewReparaciones, setViewReparaciones] = useState([]);
@@ -121,7 +123,6 @@ function vehiculo_detalle() {
 
   const deleteTrabajo = async (id_reparacion_vehiculo) => {
     try {
-      // Aquí también podrías bloquear los botones si lo deseas
       const response = await fetch(
         `http://localhost:8082/deleteTrabajos/${id_reparacion_vehiculo}`,
         {
@@ -135,7 +136,7 @@ function vehiculo_detalle() {
       if (!response.ok) {
         console.error('Error al eliminar trabajo', result.error);
       } else {
-        setViewReparaciones(viewReparaciones.filter((item) => item.id_trabajo !== id));
+        setViewReparaciones(viewReparaciones.filter((item) => item.id_reparacion_vehiculo !== id_reparacion_vehiculo));
       }
     } catch (error) {
       console.error('Error al eliminar trabajo', error);
@@ -161,13 +162,11 @@ function vehiculo_detalle() {
             ))}
           </select>
         </div>
-
-        <div className="items-center p-3">
-          <boton_agregar
+          <Boton_agregar
             subir={addTrabajo}
             agregar="Agregar"
           />
-        </div>
+
 
       </div>
 
