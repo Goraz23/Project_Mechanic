@@ -1,66 +1,34 @@
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Boton_agregar from "../../components/boton_agregar";
 import Navbar_admin from "../../components/admin/navbar_admin";
 
 function Trabajos_admin() {
-  const [mecanicoSeleccionado , setMecanicoSeleccionado] = useState("");
-  const [placaSeleccionado , setPlacaSeleccionado] = useState("");
-
   const [trabajo, setTrabajo] = useState({
-    mechanic_id:mecanicoSeleccionado,
-    vehiculos_id:placaSeleccionado,
-    state_id:2
+    mechanic_id: "", 
+    vehiculos_id: "" ,
+    state_id: 2,
   });
 
   const [viewMechanic, setViewMechanic] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8082/viewMechanic", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch("http://localhost:8082/viewMechanic")
       .then((response) => response.json())
       .then((mecanicos) => {
         setViewMechanic(mecanicos.mecanicos);
-        console.log(mecanicos.mecanico, "holi?");
       })
       .catch((error) => console.error("Error fetching data:", error));
-    console.log("aqui esta");
   }, []);
 
   const [viewVehiculos, setViewVehiculos] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8082/viewVehiculo", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch("http://localhost:8082/viewVehiculo")
       .then((response) => response.json())
       .then((vehiculo) => {
         setViewVehiculos(vehiculo.vehiculos);
-        console.log("aqui esta vehiculos");
       })
       .catch((error) =>
         console.error("Error fetching data de vehiculos:", error)
       );
-  }, []);
-
-  const [viewState, setViewState] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:8082/viewState", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((stat) => {
-        setViewState(stat.mecanicos);
-        console.log("estado");
-      })
-      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const [viewTrabajos, setViewTrabajos] = useState([]);
@@ -83,14 +51,14 @@ function Trabajos_admin() {
         body: JSON.stringify(trabajo),
       });
       const result = await response.json();
-      console.log(result)
-      console.log('se agrega un trabajo');
+      console.log(result);
 
       if (!response.ok) {
         console.error("Error al registrar trabajo", result.error);
       } else {
         setViewTrabajos([...viewTrabajos, trabajo]);
         setTrabajo({
+          ...trabajo,
           mechanic_id: "",
           vehiculos_id: "",
           state_id: "",
@@ -104,7 +72,7 @@ function Trabajos_admin() {
   const deleteTrabajo = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8082/delateTrabajos/${id}`,
+        `http://localhost:8082/deleteTrabajos/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -114,16 +82,20 @@ function Trabajos_admin() {
       );
       const result = await response.json();
       console.log(result);
-
+  
       if (!response.ok) {
         console.error("Error al eliminar trabajo", result.error);
       } else {
-        setViewTrabajos(viewTrabajos.filter((item) => item.id_trabajo !== id));
+        // Agregar un console.log para depurar
+        console.log("ID a eliminar:", id);
+        // Filtrar correctamente los trabajos a eliminar
+        setViewTrabajos(viewTrabajos.filter((item) => item.id_trabajos !== id));
       }
     } catch (error) {
       console.error("Error al eliminar trabajo", error);
     }
   };
+  
 
   const handleInputChange = (e, field) => {
     setTrabajo({
@@ -131,25 +103,18 @@ function Trabajos_admin() {
       [field]: e.target.value,
     });
   };
-  console.log(trabajo,);
-
-  console.log(viewMechanic, "VIEWMECANICOS");
-  console.log(viewVehiculos, "VEHICULOS");
-  console.log(viewTrabajos, "VIE");
-  console.log(viewState, "Y LOS ESTADOS?");
 
   return (
     <>
       <Navbar_admin />
-      <div className="mt-5 w-[50%] h-full mx-96 bg-[#FFF] items-center">
-        {/* Input fields for trabajo */}
+      <div className="mt-5 w-25 h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center p-3">
           <label className="text-black font-bold " htmlFor="nombre">
             Mecanico
           </label>
           <select
-            value={mecanicoSeleccionado}
-            onChange= {(e)=>setMecanicoSeleccionado(e.target.value)}
+            value={trabajo.mechanic_id} // Usar mecanicoSeleccionado como valor del selector
+            onChange={(e) => handleInputChange(e, "mechanic_id")}
             className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             {viewMechanic.map((mecha) => (
@@ -164,8 +129,8 @@ function Trabajos_admin() {
             Placa
           </label>
           <select
-            value={placaSeleccionado}
-            onChange={(e) => setPlacaSeleccionado(e.target.value)}
+            value={trabajo.vehiculos_id} // Usar placaSeleccionado como valor del selector
+            onChange={(e) => handleInputChange(e, "vehiculos_id")}
             className="bg-gray-50 border-[2px] text-gray-900 text-sm rounded-3xl focus:ring-blue-500 border-[#185866] focus:border-blue-500 block w-full p-2 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             {viewVehiculos.map((vehiculo) => (
@@ -188,8 +153,8 @@ function Trabajos_admin() {
         <table className="w-full table-auto bg-[#B2C9CE] rounded-t-lg">
           <thead className="text-center text-white ">
             <tr>
-            <th className="p-2">ID</th>
-              <th className="p-2">Mecánico</th>
+              <th className="p-2">Id</th>
+              <th className="p-2">Mecancio</th>
               <th className="p-2">Vehículo</th>
               <th className="p-2">Status</th>
               <th className="p-2">Detalles</th>
@@ -205,7 +170,7 @@ function Trabajos_admin() {
                 <td className="pt-2">
                   <button
                     type="button"
-                    onClick={() => deleteTrabajo(item.id_trabajo)}
+                    onClick={() => deleteTrabajo(item.id_trabajos)}
                     className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                   >
                     <box-icon
@@ -217,7 +182,7 @@ function Trabajos_admin() {
                   </button>
                   <button
                     type="button"
-                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                    className="text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-blue-900"
                   >
                     <box-icon
                       name="info-circle"
