@@ -26,14 +26,14 @@ function reparaciones_admin() {
       .catch((error) => console.error("Error fetching data:", error));
   }, [refresh]);
 
-  const AddReparacion = async () => {
+  const AddReparacion = async (e) => {
     try {
       const response = await fetch("http://localhost:8082/addReparacion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(reparacion),
+        body: JSON.stringify(tipoReparacion),
       });
 
       const result = await response.json();
@@ -52,7 +52,7 @@ function reparaciones_admin() {
         console.error("Error al registrar reparación");
       }
     } catch (error) {
-      console.error("Error al registrar la reparacion", error);
+      console.error("Error al registrar", error);
     }
   };
 
@@ -105,14 +105,14 @@ function reparaciones_admin() {
       {showEditModal && (
         <EditarReparaciones
           onClose={handleCloseEditModal}
-          selectedReparacionId={selectedReparacionId}
+          selectedTipoReparacionId={selectedTipoReparacionId}
         />
       )}
 
       <div className="mt-5 w-[%100] h-full mx-96 bg-[#FFF] items-center">
         <div className="items-center ">
           <Tupla
-            tupla=" de reparación"
+            tupla="Tipo de reparación"
             dato="text"
             value={tipoReparacion.reparacion}
             change={(e) => valueChange(e, "reparacion")}
@@ -147,7 +147,7 @@ function reparaciones_admin() {
           <thead className="text-center text-white ">
             <tr>
               <th className="p-2">ID</th>
-              <th className="p-2"> de reparación</th>
+              <th className="p-2">Tipo de reparación</th>
               <th className="p-2">Descripción</th>
               <th className="p-2">Precio</th>
               <th className="p-2">Acciones</th>
