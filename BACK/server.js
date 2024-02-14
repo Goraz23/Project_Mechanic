@@ -570,6 +570,15 @@ app.post("/addRepairVehiculos", (req, res) => {
   });
 });
 
+app.delete('/deleteRV/:id',(req,res)=>{
+  const id_reparacion_vehiculo = req.params.id;
+  const deleteVR = `DELETE FROM reparaciones_vehiculo WHERE id_reparacion_vehiculo = ?`;
+  connection.query(deleteVR, [id_reparacion_vehiculo], (err, result) => {
+    if (err) return res.json({ error: "error al eliminar el vehiculo_material", err });
+    return res.json({ deleteRV: result });
+  });
+})
+
 app.put('/actualizarHoraFinal/:id',(req,res)=>{
   const id_reparacion_vehiculo_id = req.params.id
   
